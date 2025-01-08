@@ -19,6 +19,14 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/game/': RouteRecordInfo<'/game/', '/game', Record<never, never>, Record<never, never>>,
+    '/game/[game_id]': RouteRecordInfo<'/game/[game_id]', '/game/:game_id', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
+    '/game/ModalNewGame': RouteRecordInfo<'/game/ModalNewGame', '/game/ModalNewGame', Record<never, never>, Record<never, never>>,
+    '/game/new': RouteRecordInfo<'/game/new', '/game/new', Record<never, never>, Record<never, never>>,
+    '/game/new/[game_id]': RouteRecordInfo<'/game/new/[game_id]', '/game/new/:game_id', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
+    '/game/new/[players]/[current]': RouteRecordInfo<'/game/new/[players]/[current]', '/game/new/:players/:current', { players: ParamValue<true>, current: ParamValue<true> }, { players: ParamValue<false>, current: ParamValue<false> }>,
+    '/game/new/initial_money': RouteRecordInfo<'/game/new/initial_money', '/game/new/initial_money', Record<never, never>, Record<never, never>>,
+    '/game/new/roll': RouteRecordInfo<'/game/new/roll', '/game/new/roll', Record<never, never>, Record<never, never>>,
     '/spinwheel': RouteRecordInfo<'/spinwheel', '/spinwheel', Record<never, never>, Record<never, never>>,
   }
 }
