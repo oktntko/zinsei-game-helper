@@ -5,6 +5,8 @@ import '~/main.css';
 import DialogPlugin from '~/plugin/DialogPlugin';
 import LoadingPlugin from '~/plugin/LoadingPlugin';
 import ModalPlugin from '~/plugin/ModalPlugin';
+import ToastPlugin from '~/plugin/ToastPlugin';
+import WindowPlugin from '~/plugin/WindowPlugin';
 
 const app = createApp(App);
 
@@ -14,5 +16,7 @@ app.use(router);
 app.use(DialogPlugin);
 app.use(LoadingPlugin);
 app.use(ModalPlugin);
+app.use(ToastPlugin);
+app.use(WindowPlugin);
 
 app.mount('#app');

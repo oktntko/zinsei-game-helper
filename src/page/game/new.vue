@@ -1,19 +1,13 @@
 <script setup lang="ts">
 import { db } from '~/db';
-import { games } from '~/db/schema';
+import { games, players } from '~/db/schema';
 
 const $router = useRouter();
 const $route = useRoute('/game/new/[game_id]');
 const game_id = $route.params.game_id;
 
-const modelValue = ref<typeof games.$inferSelect>({
-  name: '',
-  description: '',
-  initial_money: 3000,
-  players: 4,
-  roll: 10,
-  game_id: '',
-});
+const modelValue = ref<typeof games.$inferSelect>();
+const playerList = ref<(typeof players.$inferSelect)[]>([]);
 
 onMounted(async () => {
   const game = await db.query.games.findFirst({
@@ -30,7 +24,7 @@ onMounted(async () => {
 
 <template>
   <RouterView v-slot="{ Component }" class="grow">
-    <template v-if="Component">
+    <template v-if="Component && modelValue">
       <Transition
         mode="out-in"
         enter-from-class="transform opacity-0"
@@ -40,7 +34,11 @@ onMounted(async () => {
         <KeepAlive>
           <Suspense>
             <!-- main content -->
-            <component :is="Component" v-model="modelValue"></component>
+            <component
+              :is="Component"
+              v-model="modelValue"
+              v-model:players="playerList"
+            ></component>
 
             <!-- loading state -->
             <template #fallback>

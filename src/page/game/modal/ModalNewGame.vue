@@ -10,8 +10,9 @@ const emit = defineEmits<{
 const modelValue = ref<typeof games.$inferInsert>({
   name: '',
   description: '',
-  initial_money: 3000,
-  players: 4,
+  sannka_ninnzuu: 4,
+  point_step: 1000,
+  first_point: 5000,
   roll: 10,
 });
 

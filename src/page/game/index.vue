@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { db } from '~/db';
 import type { games } from '~/db/schema';
-import ModalNewGame from './ModalNewGame.vue';
+import ModalNewGame from './modal/ModalNewGame.vue';
+
+const $router = useRouter();
 
 const data = ref<{
   game_list: Awaited<ReturnType<typeof db.query.games.findMany>>;
@@ -11,8 +13,6 @@ onMounted(async () => {
   data.value.game_list = await db.query.games.findMany();
 });
 type Game = typeof games.$inferSelect;
-
-const $router = useRouter();
 </script>
 
 <template>
@@ -33,6 +33,16 @@ const $router = useRouter();
         <button
           type="button"
           class="inline-flex items-center gap-0.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+          @click="
+            () => {
+              $router.push({
+                name: '/game/[game_id]',
+                params: {
+                  game_id: game.game_id,
+                },
+              });
+            }
+          "
         >
           <span class="icon-[clarity--new-solid] h-4 w-4"></span>
           はじめから
@@ -40,6 +50,16 @@ const $router = useRouter();
         <button
           type="button"
           class="inline-flex items-center gap-0.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+          @click="
+            () => {
+              $router.push({
+                name: '/game/[game_id]',
+                params: {
+                  game_id: game.game_id,
+                },
+              });
+            }
+          "
         >
           <span class="icon-[carbon--continue-filled] h-4 w-4"></span>
           つづきから

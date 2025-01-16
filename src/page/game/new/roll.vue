@@ -1,34 +1,9 @@
 <script setup lang="ts">
-import { eq } from 'drizzle-orm';
-import { db } from '~/db';
 import { games } from '~/db/schema';
-import { useLoading } from '~/plugin/LoadingPlugin';
 
 const $router = useRouter();
-const $loading = useLoading();
 
-const modelValue = defineModel<typeof games.$inferSelect>({ required: true });
-
-async function handleSubmit() {
-  const loading = $loading.open();
-
-  try {
-    await db
-      .update(games)
-      .set(modelValue.value)
-      .where(eq(games.game_id, modelValue.value.game_id))
-      .returning();
-
-    $router.replace({
-      name: '/game/[game_id]',
-      params: {
-        game_id: modelValue.value.game_id,
-      },
-    });
-  } finally {
-    loading.close();
-  }
-}
+defineModel<typeof games.$inferSelect>({ required: true });
 </script>
 
 <template>
@@ -39,7 +14,16 @@ async function handleSubmit() {
       <span class="text-blue-600 dark:text-blue-500">ゲーム</span> の設定をしましょう
     </h1>
 
-    <form class="flex max-w-sm flex-col gap-4 px-4 py-4" @submit.prevent="handleSubmit">
+    <form
+      class="flex max-w-sm flex-col gap-4 px-4 py-4"
+      @submit.prevent="
+        () => {
+          $router.push({
+            name: '/game/new/options',
+          });
+        }
+      "
+    >
       <div class="space-y-1">
         <label class="block text-sm font-medium text-gray-900 dark:text-white">
           ルーレット（さいころ）の出目を教えてください

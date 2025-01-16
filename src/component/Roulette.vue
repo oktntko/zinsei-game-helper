@@ -1,80 +1,24 @@
 <script setup lang="ts">
 const { size = 10 } = defineProps<{ size?: number }>();
-
-const wheel = ref<HTMLUListElement>();
-
-const data = ref({
-  degree: 0,
-  spinResult: 1,
-  spinning: false,
-});
-
-function spin() {
-  if (!wheel.value) {
-    return;
-  }
-
-  data.value.spinning = true;
-  for (const li of Array.from(wheel.value.children)) {
-    li.classList.remove('highlight');
-  }
-
-  const addDegree = Math.random() * 360 + 1800;
-  const newDegree = data.value.degree + addDegree;
-
-  const animation = wheel.value.animate(
-    [
-      { transform: `rotate(${data.value.degree}deg)` }, //
-      { transform: `rotate(${newDegree}deg)` }, //
-    ],
-    {
-      duration: 3000,
-      direction: 'normal',
-      easing: 'cubic-bezier(0.5, -0.25, 0.000, 1.005)',
-      fill: 'forwards',
-      iterations: 1,
-    },
-  );
-
-  function callback(_: AnimationPlaybackEvent) {
-    data.value.spinning = false;
-
-    wheel.value?.children[data.value.spinResult - 1].classList.add('highlight');
-  }
-  animation.onfinish = callback;
-  animation.oncancel = callback;
-  animation.onremove = callback;
-
-  data.value.degree = newDegree;
-  const rotate = Math.abs((data.value.degree % 360) /* 360°以内の値に直す */ - 360); // 直感的な回転量に直す;
-  data.value.spinResult = Math.trunc(rotate / (360 / size)) + 1; // １つあたりの角度から止まった数値を割り出す
-}
 </script>
 
 <template>
-  <div class="mx-auto flex h-full max-w-5xl flex-col items-center justify-center py-12">
-    <div class="h-96 w-96">
-      <div class="ui-wheel-of-fortune" :style="{ '--_items': size }">
-        <ul ref="wheel">
-          <li v-for="(_, i) of Array.from({ length: size })" :key="i">
-            <div>
-              <span class="inline-block -rotate-90">{{ i + 1 }}</span>
-            </div>
-          </li>
-        </ul>
-        <button
-          type="button"
-          :disabled="data.spinning"
-          :class="[
-            'aspect-square place-self-center rounded-full border-none bg-white/80',
-            'w-[20cqi]',
-            'transition-colors duration-150 disabled:cursor-wait disabled:bg-gray-100/80 disabled:text-gray-500',
-          ]"
-          @click="spin"
-        >
-          SPIN
-        </button>
-      </div>
+  <div>
+    <div class="ui-wheel-of-fortune" :style="{ '--_items': size }">
+      <ul ref="wheel">
+        <li v-for="(_, i) of Array.from({ length: size })" :key="i">
+          <div>
+            <span class="inline-block -rotate-90">{{ i + 1 }}</span>
+          </div>
+        </li>
+      </ul>
+      <div
+        :class="[
+          'aspect-square place-self-center rounded-full border-none bg-white/80',
+          'w-[20cqi]',
+          'transition-colors duration-150 disabled:cursor-wait disabled:bg-gray-100/80 disabled:text-gray-500',
+        ]"
+      ></div>
     </div>
   </div>
 </template>
@@ -95,7 +39,7 @@ function spin() {
     background-color: crimson;
     clip-path: polygon(50% 100%, 100% 0, 0 0);
     content: '';
-    height: 4cqi;
+    height: 8cqi;
     position: absolute;
     place-self: start center;
     scale: 1.4;
@@ -118,7 +62,8 @@ function spin() {
       background: hsl(calc(360deg / var(--_items) * calc(var(--_idx))), 100%, 65%);
       clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
       display: grid;
-      font-size: 8cqi;
+      color: gray;
+      font-size: 12cqi;
       grid-area: 1 / -1;
       padding-left: 1ch;
       rotate: calc(

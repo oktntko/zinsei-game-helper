@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Noto Sans JP"', 'sans-serif'],
+        sans: ['"DotGothic16"', 'sans-serif'],
         mono: ['"M PLUS 1 Code"', 'monospace'],
       },
     },

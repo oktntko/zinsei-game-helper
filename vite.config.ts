@@ -32,7 +32,14 @@ export default defineConfig({
     Unfonts({
       // https://fonts.google.com/
       google: {
-        families: ['Noto Sans JP', 'M PLUS 1', 'M PLUS 2', 'Murecho', 'M PLUS 1 Code'],
+        families: [
+          'DotGothic16',
+          'Noto Sans JP',
+          'M PLUS 1',
+          'M PLUS 2',
+          'Murecho',
+          'M PLUS 1 Code',
+        ],
       },
     }),
     AutoImport({

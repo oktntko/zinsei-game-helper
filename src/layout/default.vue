@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-dvh bg-gradient-to-b from-gray-200 to-white">
+  <div class="mx-auto max-w-md">
     <RouterView />
   </div>
 </template>
