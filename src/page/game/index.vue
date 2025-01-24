@@ -77,7 +77,7 @@ type Game = typeof games.$inferSelect;
 
           if (game) {
             $router.push({
-              name: '/game/new/[game_id]',
+              name: '/game/[game_id]/setting',
               params: {
                 game_id: game.game_id,
               },

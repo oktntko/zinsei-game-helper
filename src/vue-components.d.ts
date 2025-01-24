@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    InputCommafyNumber: typeof import('./component/InputCommafyNumber.vue')['default']
     Roulette: typeof import('./component/Roulette.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

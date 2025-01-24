@@ -1,60 +1,17 @@
 <script setup lang="ts">
-import * as R from 'remeda';
-import { db } from '~/db';
-import type { games, items, jobs, players } from '~/db/schema';
+import type { games, players } from '~/db/schema';
 
-const $router = useRouter();
-const $route = useRoute('/game/[game_id]');
-const game_id = $route.params.game_id;
+const game = defineModel<typeof games.$inferSelect>({ required: true });
+const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', { required: true });
 
-const modelGame = ref<typeof games.$inferSelect>();
-const playerList = ref<
-  (typeof players.$inferSelect & {
-    job: typeof jobs.$inferSelect | null;
-    item_list: (typeof items.$inferSelect)[];
-  })[]
->([]);
-const itemList = ref<(typeof items.$inferSelect)[]>([]);
-const jobList = ref<(typeof jobs.$inferSelect)[]>([]);
-
-onMounted(async () => {
-  const game = await db.query.games.findFirst({
-    with: {
-      player_list: {
-        with: {
-          job: true,
-          item_list: {
-            with: {
-              item: true,
-            },
-          },
-        },
-      },
-      item_list: true,
-      job_list: true,
-    },
-    where: (games, { eq }) => eq(games.game_id, game_id),
-  });
-
-  if (!game) {
-    return $router.replace({ name: '/game/' });
-  }
-
-  modelGame.value = R.omit(game, ['player_list', 'item_list', 'job_list']);
-  playerList.value = R.pick(game, ['player_list']).player_list.map((player) => ({
-    ...R.omit(player, ['item_list']),
-    item_list: player.item_list.map((x) => x.item),
-  }));
-  itemList.value = R.pick(game, ['item_list']).item_list;
-  jobList.value = R.pick(game, ['job_list']).job_list;
-});
+useTitle(`あそび | ${game.value.name}`);
 </script>
 
 <template>
   <div class="flex h-dvh flex-col">
     <main class="m-2 flex grow flex-col gap-1">
       <div
-        v-for="player of playerList"
+        v-for="player of player_list"
         :key="player.player_id"
         class="w-full grow space-y-2 rounded border-4 bg-white p-6"
         :style="{ 'border-color': `rgb(${player.color})` }"
@@ -78,7 +35,7 @@ onMounted(async () => {
             </button>
             <input
               id="counter-input"
-              v-model="player.money"
+              v-model="player.point"
               type="number"
               data-input-counter
               class="flex-shrink-0 border-0 bg-transparent text-center text-2xl font-normal text-gray-900 focus:outline-none focus:ring-0 dark:text-white"

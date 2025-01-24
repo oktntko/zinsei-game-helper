@@ -11,7 +11,7 @@ const modelValue = ref<typeof games.$inferInsert>({
   name: '',
   description: '',
   sannka_ninnzuu: 4,
-  point_step: 1000,
+  step: 1000,
   first_point: 5000,
   roll: 10,
 });

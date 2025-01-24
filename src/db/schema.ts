@@ -9,9 +9,9 @@ export const games = pgTable('game', {
 
   sannka_ninnzuu: integer().notNull(), /// 参加人数
 
-  point_step: integer().notNull(), /// 最小ポイントの増加/減少単位
-  first_point: integer().notNull(), /// ゲーム開始時点のポイント
   roll: integer().notNull(), /// 出目
+  step: integer().notNull(), /// 最小ポイントの増加/減少単位
+  first_point: integer().notNull(), /// ゲーム開始時点のポイント
   /// ゲームシステム
   enable_syakkinn_yakusoku_tegata: boolean().notNull().default(true), /// 借金・約束手形
   yakusoku_tegata: integer().notNull().default(20000), /// 約束手形の金額
@@ -33,10 +33,11 @@ export const players = pgTable('player', {
     .notNull()
     .references(() => games.game_id),
 
-  name: varchar({ length: 40 }).notNull(), /// プレイヤーの名前
-  color: varchar({ length: 40 }).notNull(), /// 好きな色
-  image: varchar({ length: 100 }).notNull(), /// イメージ
-  point: integer().notNull(), /// 点数
+  order: integer().notNull().default(0), /// 並び
+  name: varchar({ length: 40 }).notNull().default(''), /// プレイヤーの名前
+  color: varchar({ length: 40 }).notNull().default(''), /// 好きな色
+  image: varchar({ length: 100 }).notNull().default(''), /// イメージ
+  point: integer().notNull().default(0), /// 点数
 
   yakusoku_tegata: integer().notNull().default(0), /// 約束手形
 

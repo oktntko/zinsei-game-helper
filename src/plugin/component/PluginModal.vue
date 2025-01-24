@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useDialog } from '~/plugin/DialogPlugin';
+
 // TODO: FunctionalComponent でその場モーダルも作れるようにする
 withDefaults(
   defineProps<{
@@ -61,17 +63,35 @@ function closeDelay(returnValue?: unknown | undefined) {
     emit('close', returnValue);
   }
 }
+
+// TODO お試し
+// https://ja.vuejs.org/api/composition-api-lifecycle#onerrorcaptured
+const $dialog = useDialog();
+onErrorCaptured((message: string) => {
+  $dialog.alert(message);
+  closeDelay();
+  return false;
+});
 </script>
 
 <template>
   <dialog ref="refDialog" :class="['rounded-lg text-gray-900 shadow-xl', { open }, dialogClass]">
-    <component
-      :is="component"
-      :class="componentClass"
-      v-bind="componentProps"
-      v-on="componentEvents"
-      @close="(data: unknown) => closeDelay(data)"
-    />
+    <Suspense>
+      <component
+        :is="component"
+        :class="componentClass"
+        v-bind="componentProps"
+        v-on="componentEvents"
+        @close="(data: unknown) => closeDelay(data)"
+      />
+
+      <template #fallback>
+        <div class="flex max-w-3xl grow flex-col items-center justify-center gap-4">
+          <span class="icon-[ line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"></span>
+          <span class="animate-pulse">Loading...</span>
+        </div>
+      </template>
+    </Suspense>
     <button
       type="button"
       class="absolute right-2 top-2 h-6 w-6 rounded-full bg-transparent text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"

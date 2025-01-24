@@ -60,7 +60,7 @@ function installDialogPlugin(parentApp: App) {
         message,
         colorset: 'blue',
         icon: 'icon-[bx--info-circle]',
-        confirmText: 'OK',
+        confirmText: 'ＯＫ',
       });
     },
 
@@ -69,17 +69,17 @@ function installDialogPlugin(parentApp: App) {
         message,
         colorset: 'yellow',
         icon: 'icon-[bx--error]',
-        confirmText: 'OK',
+        confirmText: 'ＯＫ',
       });
     },
 
     async confirm(message: string) {
       return this.open({
         message,
-        colorset: 'yellow',
+        colorset: 'blue',
         icon: 'icon-[bx--info-circle]',
-        confirmText: 'YES',
-        cancelText: 'NO',
+        confirmText: 'ＯＫ',
+        cancelText: 'だめ！',
       });
     },
   };

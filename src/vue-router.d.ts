@@ -20,14 +20,11 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/game/': RouteRecordInfo<'/game/', '/game', Record<never, never>, Record<never, never>>,
+    '/game/[game_id]': RouteRecordInfo<'/game/[game_id]', '/game/:game_id', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
     '/game/[game_id]/': RouteRecordInfo<'/game/[game_id]/', '/game/:game_id', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
-    '/game/new': RouteRecordInfo<'/game/new', '/game/new', Record<never, never>, Record<never, never>>,
-    '/game/new/[game_id]': RouteRecordInfo<'/game/new/[game_id]', '/game/new/:game_id', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
-    '/game/new/[sannka_ninnzuu]/[current]': RouteRecordInfo<'/game/new/[sannka_ninnzuu]/[current]', '/game/new/:sannka_ninnzuu/:current', { sannka_ninnzuu: ParamValue<true>, current: ParamValue<true> }, { sannka_ninnzuu: ParamValue<false>, current: ParamValue<false> }>,
-    '/game/new/confirm': RouteRecordInfo<'/game/new/confirm', '/game/new/confirm', Record<never, never>, Record<never, never>>,
-    '/game/new/initial_money': RouteRecordInfo<'/game/new/initial_money', '/game/new/initial_money', Record<never, never>, Record<never, never>>,
-    '/game/new/options': RouteRecordInfo<'/game/new/options', '/game/new/options', Record<never, never>, Record<never, never>>,
-    '/game/new/roll': RouteRecordInfo<'/game/new/roll', '/game/new/roll', Record<never, never>, Record<never, never>>,
+    '/game/[game_id]/setting': RouteRecordInfo<'/game/[game_id]/setting', '/game/:game_id/setting', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
+    '/game/[game_id]/setting/': RouteRecordInfo<'/game/[game_id]/setting/', '/game/:game_id/setting', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
+    '/game/[game_id]/setting/player': RouteRecordInfo<'/game/[game_id]/setting/player', '/game/:game_id/setting/player', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
     '/spinwheel': RouteRecordInfo<'/spinwheel', '/spinwheel', Record<never, never>, Record<never, never>>,
   }
 }

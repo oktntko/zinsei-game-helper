@@ -69,4 +69,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@electric-sql/pglite'],
   },
+  build: {
+    target: ['es2022', 'edge89', 'firefox89', 'chrome89', 'safari15'],
+  },
 });

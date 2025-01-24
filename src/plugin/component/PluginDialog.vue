@@ -117,19 +117,22 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
       <footer class="flex gap-4 bg-gray-50 px-4 py-3">
         <div
           v-if="icon"
-          class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
+          class="flex w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:w-10"
         ></div>
         <button
           v-if="confirmText"
           type="button"
           :class="[
             'inline-flex items-center justify-center shadow-sm transition-all focus:outline-none focus:ring',
-            'min-w-[120px] rounded-md border px-4 py-2 text-sm font-medium',
-            colorset === 'blue' && 'border-blue-700 bg-blue-600 text-white hover:bg-blue-800',
-            colorset === 'red' && 'border-red-700 bg-red-600 text-white hover:bg-red-800',
+            'min-w-24 rounded-md border px-4 py-2 text-sm font-medium',
+            colorset === 'blue' &&
+              'border-blue-700 bg-white text-blue-700 hover:bg-blue-800 hover:text-white',
+            colorset === 'red' &&
+              'border-red-700 bg-white text-red-700 hover:bg-red-800 hover:text-white',
             colorset === 'yellow' &&
-              'border-yellow-500 bg-yellow-400 text-gray-800 hover:bg-yellow-600',
-            colorset === 'green' && 'border-green-700 bg-green-600 text-white hover:bg-green-800',
+              'border-yellow-500 bg-white text-yellow-800 hover:bg-yellow-500 hover:text-gray-800',
+            colorset === 'green' &&
+              'border-yellow-500 bg-white text-yellow-800 hover:bg-yellow-500 hover:text-gray-800',
           ]"
           :autofocus="autofocus === 'confirm'"
           @click="closeDelay(CONFIRMED_VALUE)"
@@ -141,7 +144,7 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
           type="button"
           :class="[
             'inline-flex items-center justify-center shadow-sm transition-all focus:outline-none focus:ring',
-            'min-w-[120px] rounded-md border px-4 py-2 text-sm font-medium',
+            'min-w-24 rounded-md border px-4 py-2 text-sm font-medium',
             'border-gray-300 bg-white text-gray-800 hover:bg-gray-200',
           ]"
           :autofocus="autofocus === 'cancel'"
