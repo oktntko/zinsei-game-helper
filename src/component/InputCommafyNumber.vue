@@ -14,6 +14,19 @@ const modelValue = defineModel<number>({ required: true });
 const input = ref<HTMLInputElement>();
 
 const isInput = ref(false);
+
+const innerValue = computed({
+  get() {
+    return modelValue.value;
+  },
+  set(newValue) {
+    if (typeof newValue === 'number') {
+      modelValue.value = newValue;
+    } else {
+      modelValue.value = 0;
+    }
+  },
+});
 </script>
 
 <template>
@@ -21,14 +34,18 @@ const isInput = ref(false);
     v-if="isInput"
     v-bind="$attrs"
     ref="input"
-    v-model.number="modelValue"
-    @blur="isInput = false"
+    v-model.number="innerValue"
+    @blur="
+      {
+        isInput = false;
+      }
+    "
   />
   <input
     v-else
     v-bind="R.omit($attrs, ['type'])"
     type="text"
-    :value="modelValue.toLocaleString()"
+    :value="innerValue.toLocaleString()"
     @focus="
       () => {
         isInput = true;

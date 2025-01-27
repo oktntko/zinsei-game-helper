@@ -59,14 +59,22 @@ useTitle(`あそび | ${game.value.name}`);
     </main>
 
     <footer class="sticky bottom-0 z-10 flex shrink-0 justify-center">
-      <div class="flex w-full flex-1 items-end">
+      <RouterLink
+        :to="{
+          name: '/game/[game_id]/setting/',
+          params: {
+            game_id: game.game_id,
+          },
+        }"
+        class="flex w-full flex-1 items-end"
+      >
         <button type="button" class="group/item h-16 w-full">
           <div
             class="icon-[solar--menu-dots-circle-broken] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
           ></div>
           <div class="text-xs text-gray-900 dark:text-white">メニュー</div>
         </button>
-      </div>
+      </RouterLink>
       <button type="button" class="w-full flex-1">
         <span class="icon-[mynaui--undo-solid]"></span>
       </button>

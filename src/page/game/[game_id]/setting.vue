@@ -66,7 +66,7 @@ const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', 
       </div>
       <div class="flex w-full flex-1 items-center">
         <RouterLink
-          :to="{ name: '/game/[game_id]/setting/', params: { game_id: game.game_id } }"
+          :to="{ name: '/game/[game_id]/setting/option', params: { game_id: game.game_id } }"
           class="group/item w-full text-center"
           exact-active-class="text-blue-600"
         >
