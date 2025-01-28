@@ -24,7 +24,6 @@ declare module 'vue-router/auto-routes' {
     '/game/[game_id]/': RouteRecordInfo<'/game/[game_id]/', '/game/:game_id', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
     '/game/[game_id]/setting': RouteRecordInfo<'/game/[game_id]/setting', '/game/:game_id/setting', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
     '/game/[game_id]/setting/': RouteRecordInfo<'/game/[game_id]/setting/', '/game/:game_id/setting', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
-    '/game/[game_id]/setting/option': RouteRecordInfo<'/game/[game_id]/setting/option', '/game/:game_id/setting/option', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
     '/game/[game_id]/setting/player': RouteRecordInfo<'/game/[game_id]/setting/player', '/game/:game_id/setting/player', { game_id: ParamValue<true> }, { game_id: ParamValue<false> }>,
     '/spinwheel': RouteRecordInfo<'/spinwheel', '/spinwheel', Record<never, never>, Record<never, never>>,
   }

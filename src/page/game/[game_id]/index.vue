@@ -8,8 +8,49 @@ useTitle(`あそび | ${game.value.name}`);
 </script>
 
 <template>
-  <div class="flex h-dvh flex-col">
-    <main class="m-2 flex grow flex-col gap-1">
+  <div class="flex h-dvh flex-col overflow-hidden">
+    <header
+      class="z-10 flex shrink-0 justify-center gap-2 rounded-b bg-gray-900/70 px-2 py-2 shadow backdrop-blur"
+    >
+      <RouterLink
+        :to="{
+          name: '/game/',
+        }"
+        class="group/item inline-flex flex-col items-center justify-center text-gray-400"
+      >
+        <div
+          class="icon-[weui--back2-outlined] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+        ></div>
+      </RouterLink>
+
+      <RouterLink
+        :to="{
+          name: '/game/[game_id]/',
+          params: {
+            game_id: game.game_id,
+          },
+        }"
+        class="inline-flex flex-1 items-center justify-center truncate text-2xl text-yellow-500"
+      >
+        {{ game.name }}
+      </RouterLink>
+
+      <RouterLink
+        :to="{
+          name: '/game/[game_id]/setting/',
+          params: {
+            game_id: game.game_id,
+          },
+        }"
+        class="group/item inline-flex flex-col items-center justify-center text-gray-400"
+      >
+        <div
+          class="icon-[uil--setting] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+        ></div>
+      </RouterLink>
+    </header>
+
+    <main class="flex flex-1 flex-col gap-1 overflow-y-auto p-2">
       <div
         v-for="player of player_list"
         :key="player.player_id"
@@ -58,33 +99,40 @@ useTitle(`あそび | ${game.value.name}`);
       </div>
     </main>
 
-    <footer class="sticky bottom-0 z-10 flex shrink-0 justify-center">
-      <RouterLink
-        :to="{
-          name: '/game/[game_id]/setting/',
-          params: {
-            game_id: game.game_id,
-          },
-        }"
-        class="flex w-full flex-1 items-end"
-      >
-        <button type="button" class="group/item h-16 w-full">
-          <div
-            class="icon-[solar--menu-dots-circle-broken] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></div>
-          <div class="text-xs text-gray-900 dark:text-white">メニュー</div>
+    <footer
+      class="z-10 flex h-12 shrink-0 justify-center rounded-t bg-white/70 text-gray-900 shadow backdrop-blur"
+    >
+      <div class="ms-6 flex h-full flex-1 justify-center">
+        <button
+          type="button"
+          class="group/item inline-flex flex-1 flex-col items-center justify-center"
+        >
+          <span
+            class="icon-[mynaui--undo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+          ></span>
+          <span class="text-xs"> まえにもどす </span>
         </button>
-      </RouterLink>
-      <button type="button" class="w-full flex-1">
-        <span class="icon-[mynaui--undo-solid]"></span>
-      </button>
-      <button type="button" class="w-full flex-1">
-        <span class="icon-[mynaui--redo-solid]"></span>
-      </button>
-      <button type="button" class="w-full flex-1">
-        <span class="icon-[formkit--submit]"></span>
-      </button>
-      <button type="button" class="relative h-20 w-full flex-1 overflow-x-hidden overflow-y-hidden">
+        <button
+          type="button"
+          class="group/item inline-flex flex-1 flex-col items-center justify-center"
+        >
+          <span
+            class="icon-[mynaui--redo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+          ></span>
+          <span class="text-xs"> やりなおす </span>
+        </button>
+        <button
+          type="button"
+          class="group/item inline-flex flex-1 flex-col items-center justify-center"
+        >
+          <span
+            class="icon-[formkit--submit] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+          ></span>
+          <span class="text-xs"> つぎへ </span>
+        </button>
+      </div>
+
+      <button type="button" class="relative w-16">
         <Roulette
           class="absolute bottom-[-12px] right-[-12px] h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
         ></Roulette>

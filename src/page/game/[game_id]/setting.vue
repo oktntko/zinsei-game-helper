@@ -49,7 +49,7 @@ const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', 
           <div
             class="icon-[simple-icons--gamejolt] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
           ></div>
-          <div class="text-xs">せってい</div>
+          <div class="text-xs">ゲーム</div>
         </RouterLink>
       </div>
       <div class="flex w-full flex-1 items-center">
@@ -62,18 +62,6 @@ const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', 
             class="icon-[emojione-monotone--family-man-woman-girl-girl] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
           ></div>
           <div class="text-xs">あそぶひと</div>
-        </RouterLink>
-      </div>
-      <div class="flex w-full flex-1 items-center">
-        <RouterLink
-          :to="{ name: '/game/[game_id]/setting/option', params: { game_id: game.game_id } }"
-          class="group/item w-full text-center"
-          exact-active-class="text-blue-600"
-        >
-          <div
-            class="icon-[uil--setting] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></div>
-          <div class="text-xs">オプション</div>
         </RouterLink>
       </div>
     </footer>
