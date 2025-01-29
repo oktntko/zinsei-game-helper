@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { eq } from 'drizzle-orm';
-import * as R from 'remeda';
+import Sortable from 'sortablejs';
 import { colors, images } from '~/const';
 import { db } from '~/db';
 import { games, players } from '~/db/schema';
@@ -13,25 +13,50 @@ import { useToast } from '~/plugin/ToastPlugin';
 const modelValue = defineModel<typeof games.$inferSelect>({ required: true });
 const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', { required: true });
 
-const debounceHandleSubmit = R.funnel(handleSubmit, { minQuietPeriodMs: 1000 });
+const sortable = ref<Sortable>();
+onMounted(async () => {
+  sortable.value?.destroy();
 
-async function handleSubmit() {
-  try {
-    // TODO 並び替え
-  } finally {
-    //
-  }
-}
+  const el = document.getElementById(`sortable-container-player`)!;
 
-watch(
-  () => modelValue,
-  () => debounceHandleSubmit.call(),
-  { deep: true },
-);
+  sortable.value = Sortable.create(el, {
+    animation: 150,
+    handle: '.my-handle',
+    chosenClass: 'chosenClass',
+    dragClass: 'dragClass',
+
+    async onEnd(e) {
+      if (e.oldIndex == null || e.newIndex == null || e.oldIndex === e.newIndex) return;
+
+      const player = player_list.value[e.oldIndex];
+      const tail = player_list.value.slice(e.oldIndex + 1);
+
+      player_list.value.splice(e.oldIndex);
+      player_list.value.push(...tail);
+      player_list.value.splice(e.newIndex, 0, player);
+
+      await handleReorder();
+    },
+  });
+});
 
 const $dialog = useDialog();
 const $loading = useLoading();
 const $toast = useToast();
+
+async function handleReorder() {
+  try {
+    await Promise.all(
+      player_list.value.map(async (player, order) =>
+        db.update(players).set({ order }).where(eq(players.player_id, player.player_id)),
+      ),
+    );
+
+    $toast.info(`じゅんばん を ならびかえたよ`);
+  } finally {
+    //
+  }
+}
 
 async function handleDelete(player: typeof players.$inferSelect) {
   const yes = await $dialog.confirm(`${player.name} をけしてもいい？`);
@@ -51,14 +76,22 @@ async function handleDelete(player: typeof players.$inferSelect) {
 </script>
 
 <template>
-  <main class="flex flex-1 flex-col gap-2 overflow-y-auto p-2">
+  <main id="sortable-container-player" class="flex flex-1 flex-col gap-2 overflow-y-auto p-2">
     <div
       v-for="player of player_list"
       :key="player.player_id"
-      class="relative h-24 w-full rounded border-4 bg-white p-6"
+      class="relative h-24 w-full rounded border-4 bg-white py-6 pe-6 ps-2"
       :style="{ 'border-color': `rgb(${player.color})` }"
     >
       <div class="flex items-center gap-1">
+        <button
+          type="button"
+          class="my-handle flex cursor-move items-center justify-center"
+          title="handle"
+        >
+          <span class="icon-[radix-icons--drag-handle-dots-2] h-5 w-5"></span>
+          <span class="sr-only capitalize">handle</span>
+        </button>
         <img :src="player.image" />
         <h5 class="truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ player.name }}
@@ -144,3 +177,12 @@ async function handleDelete(player: typeof players.$inferSelect) {
     </button>
   </main>
 </template>
+
+<style lang="postcss" scoped>
+.chosenClass {
+  @apply bg-blue-100;
+}
+.dragClass {
+  @apply bg-blue-100;
+}
+</style>
