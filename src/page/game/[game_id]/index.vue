@@ -10,30 +10,22 @@ useTitle(`あそび | ${game.value.name}`);
 <template>
   <div class="flex h-dvh flex-col overflow-hidden">
     <header
-      class="z-10 flex shrink-0 justify-center gap-2 rounded-b bg-gray-900/70 px-2 py-2 shadow backdrop-blur"
+      class="z-10 flex shrink-0 justify-center gap-2 rounded-b-sm bg-gray-600 px-2 py-2 shadow"
     >
       <RouterLink
         :to="{
           name: '/game/',
         }"
-        class="group/item inline-flex flex-col items-center justify-center text-gray-400"
+        class="group/item inline-flex flex-col items-center justify-center text-gray-300"
       >
         <div
           class="icon-[weui--back2-outlined] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
         ></div>
       </RouterLink>
 
-      <RouterLink
-        :to="{
-          name: '/game/[game_id]/',
-          params: {
-            game_id: game.game_id,
-          },
-        }"
-        class="inline-flex flex-1 items-center justify-center truncate text-2xl text-yellow-500"
-      >
+      <div class="flex-1 overflow-hidden truncate text-2xl text-yellow-500">
         {{ game.name }}
-      </RouterLink>
+      </div>
 
       <RouterLink
         :to="{
@@ -42,7 +34,7 @@ useTitle(`あそび | ${game.value.name}`);
             game_id: game.game_id,
           },
         }"
-        class="group/item inline-flex flex-col items-center justify-center text-gray-400"
+        class="group/item inline-flex flex-col items-center justify-center text-gray-300"
       >
         <div
           class="icon-[uil--setting] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
@@ -100,7 +92,7 @@ useTitle(`あそび | ${game.value.name}`);
     </main>
 
     <footer
-      class="z-10 flex h-12 shrink-0 justify-center rounded-t bg-white/70 text-gray-900 shadow backdrop-blur"
+      class="z-10 flex h-12 shrink-0 justify-center rounded-t-sm bg-white/70 text-gray-900 shadow backdrop-blur"
     >
       <div class="ms-6 flex h-full flex-1 justify-center">
         <button

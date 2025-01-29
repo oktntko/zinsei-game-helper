@@ -31,7 +31,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <RouterView v-slot="{ Component }" class="grow">
+  <RouterView v-slot="{ Component }">
     <template v-if="Component && game">
       <Transition
         mode="out-in"
