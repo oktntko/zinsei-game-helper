@@ -32,7 +32,7 @@ useTitle(`せってい | ${game.value.name}`);
         <RouterLink
           :to="{ name: '/game/[game_id]/setting/', params: { game_id: game.game_id } }"
           class="group/item inline-flex w-12 flex-col items-center justify-center"
-          exact-active-class="text-blue-600"
+          exact-active-class="text-blue-500"
         >
           <div
             class="icon-[simple-icons--gamejolt] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
@@ -42,7 +42,7 @@ useTitle(`せってい | ${game.value.name}`);
         <RouterLink
           :to="{ name: '/game/[game_id]/setting/player', params: { game_id: game.game_id } }"
           class="group/item inline-flex w-12 flex-col items-center justify-center"
-          exact-active-class="text-blue-600"
+          exact-active-class="text-blue-500"
         >
           <div
             class="icon-[emojione-monotone--family-man-woman-girl-girl] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
@@ -73,7 +73,7 @@ useTitle(`せってい | ${game.value.name}`);
               <template #fallback>
                 <div class="flex max-w-3xl grow flex-col items-center justify-center gap-4">
                   <span
-                    class="icon-[ line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
+                    class="icon-[line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
                   ></span>
                   <span class="animate-pulse">Loading...</span>
                 </div>

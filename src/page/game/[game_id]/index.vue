@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { games, players } from '~/db/schema';
+import ModalSpinwheel from '~/page/game/modal/ModalSpinwheel.vue';
 
 const game = defineModel<typeof games.$inferSelect>({ required: true });
 const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', { required: true });
@@ -124,7 +125,17 @@ useTitle(`あそび | ${game.value.name}`);
         </button>
       </div>
 
-      <button type="button" class="relative w-16">
+      <button
+        type="button"
+        class="relative w-16"
+        @click="
+          async () => {
+            await $modal.open({
+              component: ModalSpinwheel,
+            });
+          }
+        "
+      >
         <Roulette
           class="absolute bottom-[-12px] right-[-12px] h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
         ></Roulette>

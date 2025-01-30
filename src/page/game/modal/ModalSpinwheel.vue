@@ -3,11 +3,17 @@ const { size = 10 } = defineProps<{ size?: number }>();
 
 const wheel = ref<HTMLUListElement>();
 
-const data = ref({
+const data = ref<{
+  degree: number;
+  spinResult: number;
+  spinning: boolean | undefined;
+}>({
   degree: 0,
   spinResult: 1,
-  spinning: false,
+  spinning: undefined,
 });
+
+const animation = ref<Animation>();
 
 function spin() {
   if (!wheel.value) {
@@ -22,7 +28,7 @@ function spin() {
   const addDegree = Math.random() * 360 + 1800;
   const newDegree = data.value.degree + addDegree;
 
-  const animation = wheel.value.animate(
+  animation.value = wheel.value.animate(
     [
       { transform: `rotate(${data.value.degree}deg)` }, //
       { transform: `rotate(${newDegree}deg)` }, //
@@ -38,22 +44,31 @@ function spin() {
 
   function callback(_: AnimationPlaybackEvent) {
     data.value.spinning = false;
+    animation.value = undefined;
 
     wheel.value?.children[data.value.spinResult - 1].classList.add('highlight');
   }
-  animation.onfinish = callback;
-  animation.oncancel = callback;
-  animation.onremove = callback;
+  animation.value.onfinish = callback;
+  animation.value.oncancel = callback;
+  animation.value.onremove = callback;
 
   data.value.degree = newDegree;
   const rotate = Math.abs((data.value.degree % 360) /* 360°以内の値に直す */ - 360); // 直感的な回転量に直す;
   data.value.spinResult = Math.trunc(rotate / (360 / size)) + 1; // １つあたりの角度から止まった数値を割り出す
 }
+
+function cancel() {
+  animation.value?.finish();
+}
+
+onMounted(() => {
+  setTimeout(spin, 180);
+});
 </script>
 
 <template>
-  <div class="mx-auto flex h-full max-w-5xl flex-col items-center justify-center py-12">
-    <div class="h-96 w-96">
+  <div class="flex flex-col items-center justify-center overflow-hidden px-8 pb-4 pt-12">
+    <div class="h-80 w-80 rounded-full shadow-[0_0_4px_4px_rgba(0,0,0,0.25)] sm:h-96 sm:w-96">
       <div class="ui-wheel-of-fortune" :style="{ '--_items': size }">
         <ul ref="wheel">
           <li v-for="(_, i) of Array.from({ length: size })" :key="i">
@@ -64,17 +79,29 @@ function spin() {
         </ul>
         <button
           type="button"
-          :disabled="data.spinning"
           :class="[
             'aspect-square place-self-center rounded-full border-none bg-white/80',
             'w-[20cqi]',
             'transition-colors duration-150 disabled:cursor-wait disabled:bg-gray-100/80 disabled:text-gray-500',
           ]"
-          @click="spin"
+          @click="() => (data.spinning ? cancel() : spin())"
         >
-          SPIN
+          {{ data.spinning ? '' : 'まわす' }}
         </button>
       </div>
+    </div>
+    <div class="relative py-4 text-3xl">
+      <span v-if="data.spinning === false" class="ml-16 font-bold text-blue-600 dark:text-blue-500">
+        {{ data.spinResult }}
+        <span class="text-sm text-gray-900"> が でたよ</span>
+      </span>
+      <span
+        v-else
+        class="animate-pulse text-gray-300"
+        :class="[data.spinning === undefined ? 'invisible' : '']"
+      >
+        ...
+      </span>
     </div>
   </div>
 </template>

@@ -48,7 +48,7 @@ onMounted(async () => {
             <template #fallback>
               <div class="flex max-w-3xl grow flex-col items-center justify-center gap-4">
                 <span
-                  class="icon-[ line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
+                  class="icon-[line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
                 ></span>
                 <span class="animate-pulse">Loading...</span>
               </div>

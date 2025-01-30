@@ -76,72 +76,77 @@ async function handleDelete(player: typeof players.$inferSelect) {
 </script>
 
 <template>
-  <main id="sortable-container-player" class="flex flex-1 flex-col gap-2 overflow-y-auto p-2">
-    <div
-      v-for="player of player_list"
-      :key="player.player_id"
-      class="relative h-24 w-full rounded border-4 bg-white py-6 pe-6 ps-2"
-      :style="{ 'border-color': `rgb(${player.color})` }"
-    >
-      <div class="flex items-center gap-1">
+  <div class="flex grow flex-col gap-2 p-2">
+    <main id="sortable-container-player" class="flex flex-1 flex-col gap-2 overflow-y-auto">
+      <div
+        v-for="player of player_list"
+        :key="player.player_id"
+        class="relative h-24 w-full rounded border-4 bg-white py-6 pe-6 ps-2"
+        :style="{ 'border-color': `rgb(${player.color})` }"
+      >
+        <div class="flex items-center gap-1">
+          <button
+            type="button"
+            class="my-handle flex cursor-move items-center justify-center"
+            title="handle"
+            tabindex="-1"
+          >
+            <span class="icon-[radix-icons--drag-handle-dots-2] h-5 w-5"></span>
+            <span class="sr-only capitalize">handle</span>
+          </button>
+          <img :src="player.image" />
+          <h5 class="truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ player.name }}
+          </h5>
+        </div>
+
         <button
+          title="trash"
           type="button"
-          class="my-handle flex cursor-move items-center justify-center"
-          title="handle"
+          class="absolute bottom-2 right-10 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
+          @click="
+            async () => {
+              const filteredPlayerList = player_list.filter(
+                (x) => x.player_id !== player.player_id,
+              );
+              const exists_colors = filteredPlayerList.map((x) => x.color);
+              const exists_images = filteredPlayerList.map((x) => x.image);
+
+              const updatedPlayer = await $modal.open<typeof players.$inferSelect>({
+                component: ModalEditPlayer,
+                componentProps: {
+                  player_id: player.player_id,
+                  exists_colors,
+                  exists_images,
+                },
+              });
+
+              if (!updatedPlayer) return;
+
+              player_list.splice(
+                player_list.findIndex((x) => x.player_id === player.player_id),
+                1,
+                updatedPlayer,
+              );
+            }
+          "
         >
-          <span class="icon-[radix-icons--drag-handle-dots-2] h-5 w-5"></span>
-          <span class="sr-only capitalize">handle</span>
+          <span class="icon-[oui--pencil] h-6 w-6" />
         </button>
-        <img :src="player.image" />
-        <h5 class="truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {{ player.name }}
-        </h5>
+        <button
+          title="trash"
+          type="button"
+          class="absolute bottom-2 right-2 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
+          @click="
+            async () => {
+              await handleDelete(player);
+            }
+          "
+        >
+          <span class="icon-[tabler--trash] h-6 w-6" />
+        </button>
       </div>
-
-      <button
-        title="trash"
-        type="button"
-        class="absolute bottom-2 right-10 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
-        @click="
-          async () => {
-            const filteredPlayerList = player_list.filter((x) => x.player_id !== player.player_id);
-            const exists_colors = filteredPlayerList.map((x) => x.color);
-            const exists_images = filteredPlayerList.map((x) => x.image);
-
-            const updatedPlayer = await $modal.open<typeof players.$inferSelect>({
-              component: ModalEditPlayer,
-              componentProps: {
-                player_id: player.player_id,
-                exists_colors,
-                exists_images,
-              },
-            });
-
-            if (!updatedPlayer) return;
-
-            player_list.splice(
-              player_list.findIndex((x) => x.player_id === player.player_id),
-              1,
-              updatedPlayer,
-            );
-          }
-        "
-      >
-        <span class="icon-[oui--pencil] h-6 w-6" />
-      </button>
-      <button
-        title="trash"
-        type="button"
-        class="absolute bottom-2 right-2 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
-        @click="
-          async () => {
-            await handleDelete(player);
-          }
-        "
-      >
-        <span class="icon-[tabler--trash] h-6 w-6" />
-      </button>
-    </div>
+    </main>
 
     <button
       type="button"
@@ -175,7 +180,7 @@ async function handleDelete(player: typeof players.$inferSelect) {
     >
       <span class="icon-[material-symbols--add-rounded]"></span>あそぶひと をふやす
     </button>
-  </main>
+  </div>
 </template>
 
 <style lang="postcss" scoped>
