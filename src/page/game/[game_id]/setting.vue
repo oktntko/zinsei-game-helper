@@ -30,7 +30,10 @@ useTitle(`せってい | ${game.value.name}`);
 
       <div class="flex gap-1 text-gray-300">
         <RouterLink
-          :to="{ name: '/game/[game_id]/setting/', params: { game_id: game.game_id } }"
+          :to="{
+            name: '/game/[game_id]/setting/',
+            params: { game_id: game.game_id },
+          }"
           class="group/item inline-flex w-12 flex-col items-center justify-center"
           exact-active-class="text-blue-500"
         >
@@ -40,7 +43,10 @@ useTitle(`せってい | ${game.value.name}`);
           <div class="-mt-2 text-[8px] text-white">ゲーム</div>
         </RouterLink>
         <RouterLink
-          :to="{ name: '/game/[game_id]/setting/player', params: { game_id: game.game_id } }"
+          :to="{
+            name: '/game/[game_id]/setting/player',
+            params: { game_id: game.game_id },
+          }"
           class="group/item inline-flex w-12 flex-col items-center justify-center"
           exact-active-class="text-blue-500"
         >

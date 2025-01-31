@@ -4,8 +4,14 @@ import * as R from 'remeda';
 import { db } from '~/db';
 import { games, players } from '~/db/schema';
 
+definePage({
+  meta: {
+    layout: 'game',
+  },
+});
+
 const $router = useRouter();
-const $route = useRoute('/game/[game_id]');
+const $route = useRoute('/game/[game_id]/');
 const game_id = $route.params.game_id;
 
 const game = ref<typeof games.$inferSelect>();

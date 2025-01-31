@@ -1,7 +1,14 @@
 <script setup lang="ts">
-import { db } from '~/db';
+import { db, initializeTables } from '~/db';
 import type { games } from '~/db/schema';
-import ModalNewGame from './modal/ModalNewGame.vue';
+import ModalNewGame from '~/page/game/modal/ModalNewGame.vue';
+
+definePage({
+  alias: ['/'],
+  meta: {
+    layout: 'game',
+  },
+});
 
 const $router = useRouter();
 
@@ -36,7 +43,7 @@ type Game = typeof games.$inferSelect;
           @click="
             () => {
               $router.push({
-                name: '/game/[game_id]',
+                name: '/game/[game_id]/',
                 params: {
                   game_id: game.game_id,
                 },
@@ -53,7 +60,7 @@ type Game = typeof games.$inferSelect;
           @click="
             () => {
               $router.push({
-                name: '/game/[game_id]',
+                name: '/game/[game_id]/',
                 params: {
                   game_id: game.game_id,
                 },
@@ -87,6 +94,17 @@ type Game = typeof games.$inferSelect;
       "
     >
       はじめてのゲーム
+    </button>
+    <button
+      type="button"
+      class="inline-flex items-center gap-0.5 rounded-lg border border-blue-700 bg-white px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
+      @click="
+        async () => {
+          initializeTables();
+        }
+      "
+    >
+      しょきか
     </button>
   </div>
 </template>

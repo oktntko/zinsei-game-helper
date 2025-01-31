@@ -48,7 +48,31 @@
 </script>
 
 <template>
-  <div class="min-h-dvh bg-gradient-to-b from-gray-400 to-white">
-    <RouterView />
-  </div>
+  <RouterView v-slot="{ Component }">
+    <template v-if="Component">
+      <Transition
+        mode="out-in"
+        enter-from-class="transform opacity-0"
+        enter-active-class="transition ease-out duration-200"
+        enter-to-class="transform opacity-100"
+      >
+        <KeepAlive>
+          <Suspense>
+            <!-- main content -->
+            <component :is="Component"></component>
+
+            <!-- loading state -->
+            <template #fallback>
+              <div class="flex max-w-3xl grow flex-col items-center justify-center gap-4">
+                <span
+                  class="icon-[line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
+                ></span>
+                <span class="animate-pulse">Loading...</span>
+              </div>
+            </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
+    </template>
+  </RouterView>
 </template>

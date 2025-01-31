@@ -1,6 +1,8 @@
 import { relations } from 'drizzle-orm';
 import { boolean, integer, jsonb, pgTable, uuid, varchar } from 'drizzle-orm/pg-core';
 
+export const CURRENT_VERSION: string = '1.0.0';
+
 export const games = pgTable('game', {
   game_id: uuid().primaryKey().defaultRandom(),
 
@@ -61,3 +63,7 @@ export const playerRelations = relations(players, ({ one }) => ({
     references: [games.game_id],
   }),
 }));
+
+export const migrate = pgTable('migrate', {
+  version: varchar({ length: 40 }).notNull(),
+});
