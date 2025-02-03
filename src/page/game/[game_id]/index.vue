@@ -1,11 +1,52 @@
 <script setup lang="ts">
-import type { games, players } from '~/db/schema';
+import { asc, eq } from 'drizzle-orm';
+import { $transaction } from '~/db';
+import { players, type games } from '~/db/schema';
+import { R } from '~/lib/remeda';
 import ModalSpinwheel from '~/page/game/modal/ModalSpinwheel.vue';
+import { useLoading } from '~/plugin/LoadingPlugin';
+import { useToast } from '~/plugin/ToastPlugin';
+import Player from './component/Player.vue';
 
 const game = defineModel<typeof games.$inferSelect>({ required: true });
 const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', { required: true });
 
+const currentPlayerList = ref<(typeof players.$inferSelect)[]>([]);
+const turn = ref(0);
+
 useTitle(`あそび | ${game.value.name}`);
+
+onMounted(() => {
+  currentPlayerList.value = R.clone(player_list.value);
+  turn.value = 0;
+});
+
+const $loading = useLoading();
+const $toast = useToast();
+
+async function handleNext() {
+  const loading = $loading.open();
+  try {
+    const updatedPlayerList = await $transaction(async (tx) => {
+      for (const player of player_list.value) {
+        await tx.update(players).set(player).where(eq(players.player_id, player.player_id));
+      }
+
+      return tx.query.players.findMany({
+        where: (games, { eq }) => eq(games.game_id, game.value.game_id),
+        orderBy: asc(players.order),
+      });
+    });
+
+    currentPlayerList.value = player_list.value;
+    player_list.value = updatedPlayerList;
+    turn.value = turn.value + 1 < player_list.value.length ? turn.value + 1 : 0;
+
+    $toast.success(`${player_list.value[turn.value].name} のばんだよ`);
+  } finally {
+    loading.close();
+  }
+}
 </script>
 
 <template>
@@ -43,59 +84,34 @@ useTitle(`あそび | ${game.value.name}`);
       </RouterLink>
     </header>
 
-    <main class="flex flex-1 flex-col gap-1 overflow-y-auto p-2">
-      <div
-        v-for="player of player_list"
+    <main
+      v-if="currentPlayerList.length"
+      class="flex flex-1 flex-col gap-px overflow-y-auto p-px sm:gap-1 sm:p-2"
+    >
+      <Player
+        v-for="(player, i) of player_list"
         :key="player.player_id"
-        class="w-full grow space-y-2 rounded border-4 bg-white p-6"
-        :style="{ 'border-color': `rgb(${player.color})` }"
+        v-model:player="player_list[i]"
+        :current="currentPlayerList[i]"
+        :game="game"
+        :class="[turn === player.order ? 'border-solid' : 'border-dotted']"
       >
-        <div class="flex items-center gap-1">
-          <img :src="player.image" />
-          <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {{ player.name }}
-          </h5>
-        </div>
-
-        <div>
-          <div class="flex items-center justify-between">
-            <button
-              id="decrement-button"
-              type="button"
-              data-input-counter-decrement="counter-input"
-              class="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-            >
-              <span class="icon-[tabler--minus]"></span>
-            </button>
-            <input
-              id="counter-input"
-              v-model="player.point"
-              type="number"
-              data-input-counter
-              class="flex-shrink-0 border-0 bg-transparent text-center text-2xl font-normal text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
-              placeholder=""
-              required
-            />
-            <button
-              id="increment-button"
-              type="button"
-              data-input-counter-increment="counter-input"
-              class="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-            >
-              <span class="icon-[tabler--plus]"></span>
-            </button>
-          </div>
-          <div>きゅうりょう</div>
-        </div>
-
-        <div>もちもの</div>
-      </div>
+      </Player>
     </main>
 
     <footer
       class="z-10 flex h-12 shrink-0 justify-center rounded-t-sm bg-white/70 text-gray-900 shadow backdrop-blur"
     >
       <div class="ms-6 flex h-full flex-1 justify-center">
+        <button
+          type="button"
+          class="group/item inline-flex flex-1 flex-col items-center justify-center"
+        >
+          <span
+            class="icon-[solar--menu-dots-circle-broken] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+          ></span>
+          <span class="text-xs"> メニュー </span>
+        </button>
         <button
           type="button"
           class="group/item inline-flex flex-1 flex-col items-center justify-center"
@@ -108,15 +124,7 @@ useTitle(`あそび | ${game.value.name}`);
         <button
           type="button"
           class="group/item inline-flex flex-1 flex-col items-center justify-center"
-        >
-          <span
-            class="icon-[mynaui--redo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></span>
-          <span class="text-xs"> やりなおす </span>
-        </button>
-        <button
-          type="button"
-          class="group/item inline-flex flex-1 flex-col items-center justify-center"
+          @click="handleNext"
         >
           <span
             class="icon-[formkit--submit] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"

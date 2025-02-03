@@ -34,7 +34,7 @@ const innerValue = computed({
     v-if="isInput"
     v-bind="$attrs"
     ref="input"
-    v-model.number="innerValue"
+    v-model.number.lazy="innerValue"
     @blur="
       {
         isInput = false;
