@@ -8,40 +8,66 @@ const props = defineProps<{
 }>();
 
 const player = defineModel<typeof players.$inferSelect>('player', { required: true });
+const turn = defineModel<number>('turn', { required: true });
 
 const isPlus = ref<boolean>(true);
 
 const pointDiff = computed(() => {
   return player.value.point - props.current.point;
 });
+
+const refRadio = ref<HTMLInputElement>();
+watchEffect(() => {
+  if (turn.value === player.value.order) {
+    refRadio.value?.focus();
+  }
+});
 </script>
 
 <template>
   <div
-    class="relative flex w-full grow flex-col justify-center gap-2 rounded border-8 bg-white p-6"
-    :style="{ 'border-color': `rgb(${player.color})` }"
+    class="relative flex w-full grow flex-col justify-center gap-2 rounded bg-white transition-colors"
+    :class="[turn === player.order ? 'border-8 p-6' : 'border-4 p-7']"
+    :style="{
+      'border-color': turn === player.order ? `rgb(${player.color})` : `rgba(${player.color},0.6)`,
+    }"
   >
-    <slot></slot>
-
-    <div class="flex items-center gap-1">
-      <img :src="player.image" width="40" height="40" class="h-10 w-10" />
-      <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {{ player.name }}
-      </h5>
+    <div>
+      <label
+        class="inline-flex cursor-pointer items-center gap-1"
+        :class="[
+          'before:h-6 before:w-6 before:rounded-full before:border before:border-gray-200 before:bg-gray-50 before:transition-all',
+          turn === player.order
+            ? 'before:bg-green-400 before:shadow-[inset_0_0_0_4px_rgba(243,244,246,0.9)]'
+            : '',
+        ]"
+      >
+        <input
+          ref="refRadio"
+          v-model="turn"
+          type="radio"
+          class="absolute opacity-0"
+          :value="player.order"
+        />
+        <img :src="player.image" width="40" height="40" class="h-10 w-10" />
+        <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {{ player.name }}
+        </h5>
+      </label>
     </div>
 
     <div class="flex grow flex-col justify-center gap-1">
       <template v-if="pointDiff === 0">
         <InputCommafyNumber
           v-model.lazy="player.point"
-          class="w-full items-center justify-center text-center text-3xl"
+          class="w-full items-center justify-center text-center text-3xl leading-none"
           type="number"
           :step="game.step"
         >
         </InputCommafyNumber>
       </template>
       <template v-else>
-        <div class="relative flex items-center justify-between gap-2">
+        <div class="relative flex items-end justify-center gap-2">
           <div class="text-2xl">
             {{ current.point.toLocaleString() }}
           </div>
@@ -56,7 +82,7 @@ const pointDiff = computed(() => {
 
           <div class="text-xl">=</div>
 
-          <div class="text-3xl">
+          <div class="max-w-40 text-3xl leading-none">
             <!-- https://codepen.io/regic/pen/pyyKbd -->
             <InputCommafyNumber
               v-model="player.point"

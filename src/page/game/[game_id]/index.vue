@@ -4,7 +4,6 @@ import { $transaction } from '~/db';
 import { players, type games } from '~/db/schema';
 import { R } from '~/lib/remeda';
 import ModalSpinwheel from '~/page/game/modal/ModalSpinwheel.vue';
-import { useLoading } from '~/plugin/LoadingPlugin';
 import { useToast } from '~/plugin/ToastPlugin';
 import Player from './component/Player.vue';
 
@@ -21,11 +20,11 @@ onMounted(() => {
   turn.value = 0;
 });
 
-const $loading = useLoading();
+const loading = ref(false);
 const $toast = useToast();
 
 async function handleNext() {
-  const loading = $loading.open();
+  loading.value = true;
   try {
     const updatedPlayerList = await $transaction(async (tx) => {
       for (const player of player_list.value) {
@@ -44,7 +43,7 @@ async function handleNext() {
 
     $toast.success(`${player_list.value[turn.value].name} のばんだよ`);
   } finally {
-    loading.close();
+    loading.value = false;
   }
 }
 </script>
@@ -86,15 +85,15 @@ async function handleNext() {
 
     <main
       v-if="currentPlayerList.length"
-      class="flex flex-1 flex-col gap-px overflow-y-auto p-px sm:gap-1 sm:p-2"
+      class="flex flex-1 snap-y snap-mandatory flex-col gap-1 overflow-y-auto scroll-smooth p-1 sm:gap-2 sm:p-2"
     >
       <Player
         v-for="(player, i) of player_list"
         :key="player.player_id"
         v-model:player="player_list[i]"
+        v-model:turn="turn"
         :current="currentPlayerList[i]"
         :game="game"
-        :class="[turn === player.order ? 'border-solid' : 'border-dotted']"
       >
       </Player>
     </main>
@@ -106,6 +105,7 @@ async function handleNext() {
         <button
           type="button"
           class="group/item inline-flex flex-1 flex-col items-center justify-center"
+          :disabled="loading"
         >
           <span
             class="icon-[solar--menu-dots-circle-broken] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
@@ -115,6 +115,7 @@ async function handleNext() {
         <button
           type="button"
           class="group/item inline-flex flex-1 flex-col items-center justify-center"
+          :disabled="loading"
         >
           <span
             class="icon-[mynaui--undo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
@@ -124,6 +125,7 @@ async function handleNext() {
         <button
           type="button"
           class="group/item inline-flex flex-1 flex-col items-center justify-center"
+          :disabled="loading"
           @click="handleNext"
         >
           <span
@@ -136,6 +138,7 @@ async function handleNext() {
       <button
         type="button"
         class="relative w-16"
+        :disabled="loading"
         @click="
           async () => {
             await $modal.open({
