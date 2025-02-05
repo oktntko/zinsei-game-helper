@@ -11,6 +11,5 @@ declare module 'vue' {
     Roulette: typeof import('./component/Roulette.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TogglePlusMinus: typeof import('./component/TogglePlusMinus.vue')['default']
   }
 }
