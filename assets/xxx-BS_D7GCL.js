@@ -1,0 +1,1 @@
+import{d as a}from"./index-VPw0nvdD.js";import{d as t,j as s,b as o,k as n,c,o as r}from"./index-B_PTlJUY.js";const m={class:"container mx-auto flex flex-col items-center gap-4 py-8"},p=t({__name:"xxx",setup(x){s();const e=o({game_list:[]});return n(async()=>{e.value.game_list=await a.query.games.findMany()}),(i,_)=>(r(),c("div",m,"xxxxx"))}});export{p as default};
