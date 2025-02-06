@@ -1,1 +1,0 @@
-import{p as a}from"./index-rI2ba7fC.js";import{d as r,w as s,c as n,a as c,r as _,o as m}from"./index-CBNPx-hI.js";const p={class:"min-h-dvh bg-gradient-to-b from-gray-400 to-white"},u=r({__name:"game",async setup(i){let e,t;return[e,t]=s(()=>a()),await e,t(),(d,l)=>{const o=_("RouterView");return m(),n("div",p,[c(o)])}}});export{u as default};
