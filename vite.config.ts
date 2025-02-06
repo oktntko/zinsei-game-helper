@@ -13,12 +13,14 @@ import VueLayouts from 'vite-plugin-vue-layouts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/zinsei-game-helper/', // for GitHub Pages
   plugins: [
     VueRouter({
       extensions: ['.vue'],
       routesFolder: 'src/page',
       exclude: ['**/component', '**/modal'],
       dts: 'src/vue-router.d.ts',
+      importMode: 'sync', // for GitHub Pages
     }),
     Vue(),
     VueJsx(),
@@ -56,14 +58,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': fileURLToPath(new URL('./src', import.meta.url)),
-    },
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-      },
     },
   },
   optimizeDeps: {

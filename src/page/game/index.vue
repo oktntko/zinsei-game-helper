@@ -37,40 +37,18 @@ type Game = typeof games.$inferSelect;
       </p>
 
       <div class="flex justify-center gap-4">
-        <button
-          type="button"
+        <RouterLink
+          :to="{
+            name: '/game/[game_id]/',
+            params: {
+              game_id: game.game_id,
+            },
+          }"
           class="inline-flex items-center gap-0.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-          @click="
-            () => {
-              $router.push({
-                name: '/game/[game_id]/',
-                params: {
-                  game_id: game.game_id,
-                },
-              });
-            }
-          "
-        >
-          <span class="icon-[clarity--new-solid] h-4 w-4"></span>
-          はじめから
-        </button>
-        <button
-          type="button"
-          class="inline-flex items-center gap-0.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-          @click="
-            () => {
-              $router.push({
-                name: '/game/[game_id]/',
-                params: {
-                  game_id: game.game_id,
-                },
-              });
-            }
-          "
         >
           <span class="icon-[carbon--continue-filled] h-4 w-4"></span>
-          つづきから
-        </button>
+          はじめから
+        </RouterLink>
       </div>
     </div>
     <button
@@ -98,11 +76,7 @@ type Game = typeof games.$inferSelect;
     <button
       type="button"
       class="inline-flex items-center gap-0.5 rounded-lg border border-blue-700 bg-white px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
-      @click="
-        async () => {
-          initializeTables();
-        }
-      "
+      @click="initializeTables"
     >
       しょきか
     </button>
