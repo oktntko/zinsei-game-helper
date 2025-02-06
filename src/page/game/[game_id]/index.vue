@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { asc, eq } from 'drizzle-orm';
-import { $transaction } from '~/db';
+import { db } from '~/db';
 import { players, type games } from '~/db/schema';
 import { R } from '~/lib/remeda';
 import ModalSpinwheel from '~/page/game/modal/ModalSpinwheel.vue';
@@ -10,6 +10,7 @@ import Player from './component/Player.vue';
 const game = defineModel<typeof games.$inferSelect>({ required: true });
 const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', { required: true });
 
+const historyList = ref<(typeof players.$inferSelect)[][]>([]);
 const currentPlayerList = ref<(typeof players.$inferSelect)[]>([]);
 const turn = ref(0);
 
@@ -26,17 +27,16 @@ const $toast = useToast();
 async function handleNext() {
   loading.value = true;
   try {
-    const updatedPlayerList = await $transaction(async (tx) => {
-      for (const player of player_list.value) {
-        await tx.update(players).set(player).where(eq(players.player_id, player.player_id));
-      }
+    for (const player of player_list.value) {
+      await db.update(players).set(player).where(eq(players.player_id, player.player_id));
+    }
 
-      return tx.query.players.findMany({
-        where: (games, { eq }) => eq(games.game_id, game.value.game_id),
-        orderBy: asc(players.order),
-      });
+    const updatedPlayerList = await db.query.players.findMany({
+      where: (games, { eq }) => eq(games.game_id, game.value.game_id),
+      orderBy: asc(players.order),
     });
 
+    historyList.value.unshift(R.clone(currentPlayerList.value));
     currentPlayerList.value = player_list.value;
     player_list.value = updatedPlayerList;
     turn.value = turn.value + 1 < player_list.value.length ? turn.value + 1 : 0;
@@ -114,8 +114,21 @@ async function handleNext() {
         </button>
         <button
           type="button"
-          class="group/item inline-flex flex-1 flex-col items-center justify-center"
+          class="group/item inline-flex flex-1 flex-col items-center justify-center disabled:text-gray-500"
           :disabled="loading"
+          @click="
+            () => {
+              const newest = historyList.shift();
+              if (newest) {
+                currentPlayerList = newest;
+                player_list = newest;
+                turn = turn - 1 >= 0 ? turn - 1 : player_list.length - 1;
+                $toast.success(`まえにもどしたよ`);
+              } else {
+                $toast.info(`もうもどせないよ`);
+              }
+            }
+          "
         >
           <span
             class="icon-[mynaui--undo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
