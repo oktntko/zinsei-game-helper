@@ -15,7 +15,7 @@
     (function (l) {
       console.log('index', l);
       if (l.hash) {
-        window.history.replaceState(null, '', l.pathname);
+        window.history.replaceState(null, '', l.hash.slice(1));
       }
     })(window.location);
   </script>
