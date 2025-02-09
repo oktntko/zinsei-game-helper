@@ -77,11 +77,11 @@ useTitle(`せってい | ${game.value.name}`);
 
               <!-- loading state -->
               <template #fallback>
-                <div class="flex max-w-3xl grow flex-col items-center justify-center gap-4">
+                <div class="flex min-h-dvh grow flex-col items-center justify-center gap-4">
                   <span
-                    class="icon-[line-md:loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
+                    class="icon-[line-md--loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
                   ></span>
-                  <span class="animate-pulse">Loading...</span>
+                  <span class="animate-pulse">ちょっとまってね</span>
                 </div>
               </template>
             </Suspense>
