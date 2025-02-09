@@ -94,7 +94,9 @@ async function handleDelete(player: typeof players.$inferSelect) {
             <span class="icon-[radix-icons--drag-handle-dots-2] h-5 w-5"></span>
             <span class="sr-only capitalize">handle</span>
           </button>
-          <img :src="player.image" />
+          <div class="flex h-10 w-10 items-center justify-center">
+            <img :src="player.image" height="40" width="40" />
+          </div>
           <h5 class="truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ player.name }}
           </h5>
@@ -160,12 +162,12 @@ async function handleDelete(player: typeof players.$inferSelect) {
             component: ModalNewPlayer,
             componentProps: {
               game_id: modelValue.game_id,
-              order: player_list.length + 1,
+              order: player_list.length,
               initial_color: colors
-                .map(([color]) => color)
+                .map(({ value }) => value)
                 .filter((color) => !exists_colors.includes(color))[0],
               initial_image: images
-                .map(([image]) => image)
+                .map(({ value }) => value)
                 .filter((image) => !exists_images.includes(image))[0],
               exists_colors,
               exists_images,

@@ -150,40 +150,16 @@ async function seedData() {
     })
     .returning();
 
-  await db.insert(schema.players).values([
-    {
-      name: 'ぼく',
+  await db.insert(schema.players).values(
+    ['ぼく', 'わたし', 'おとな(1)', 'おとな(2)'].map((name, order) => ({
+      name,
       game_id: 人生ゲーム.game_id,
-      order: 0,
-      color: colors[0][0],
-      image: images[0][0],
+      order,
+      color: colors[order].value,
+      image: images[order].value,
       point: 人生ゲーム.first_point,
-    },
-    {
-      name: 'わたし',
-      game_id: 人生ゲーム.game_id,
-      order: 1,
-      color: colors[1][0],
-      image: images[1][0],
-      point: 人生ゲーム.first_point,
-    },
-    {
-      name: 'おとな(1)',
-      game_id: 人生ゲーム.game_id,
-      order: 2,
-      color: colors[2][0],
-      image: images[2][0],
-      point: 人生ゲーム.first_point,
-    },
-    {
-      name: 'おとな(2)',
-      game_id: 人生ゲーム.game_id,
-      order: 3,
-      color: colors[3][0],
-      image: images[3][0],
-      point: 人生ゲーム.first_point,
-    },
-  ]);
+    })),
+  );
 
   // ドラえもん人生ゲーム
   const [ドラえもん人生ゲーム] = await db
@@ -206,48 +182,16 @@ async function seedData() {
     })
     .returning();
 
-  await db.insert(schema.players).values([
-    {
-      name: 'ドラえもん',
+  await db.insert(schema.players).values(
+    ['ドラえもん', 'のびた', 'しずか', 'スネお', 'ジャイアン'].map((name, order) => ({
+      name,
       game_id: ドラえもん人生ゲーム.game_id,
-      order: 0,
-      color: colors[0][0],
-      image: images[0][0],
+      order,
+      color: colors[order].value,
+      image: images[order].value,
       point: ドラえもん人生ゲーム.first_point,
-    },
-    {
-      name: 'のびた',
-      game_id: ドラえもん人生ゲーム.game_id,
-      order: 1,
-      color: colors[1][0],
-      image: images[1][0],
-      point: ドラえもん人生ゲーム.first_point,
-    },
-    {
-      name: 'しずか',
-      game_id: ドラえもん人生ゲーム.game_id,
-      order: 2,
-      color: colors[2][0],
-      image: images[2][0],
-      point: ドラえもん人生ゲーム.first_point,
-    },
-    {
-      name: 'スネお',
-      game_id: ドラえもん人生ゲーム.game_id,
-      order: 3,
-      color: colors[3][0],
-      image: images[3][0],
-      point: ドラえもん人生ゲーム.first_point,
-    },
-    {
-      name: 'ジャイアン',
-      game_id: ドラえもん人生ゲーム.game_id,
-      order: 4,
-      color: colors[4][0],
-      image: images[4][0],
-      point: ドラえもん人生ゲーム.first_point,
-    },
-  ]);
+    })),
+  );
 
   // モノポリー
   const [モノポリー] = await db
@@ -270,40 +214,16 @@ async function seedData() {
     })
     .returning();
 
-  await db.insert(schema.players).values([
-    {
-      name: 'ぼく',
+  await db.insert(schema.players).values(
+    ['ぼく', 'わたし', 'おとな(1)', 'おとな(2)'].map((name, order) => ({
+      name,
       game_id: モノポリー.game_id,
-      order: 0,
-      color: colors[0][0],
-      image: images[0][0],
+      order,
+      color: colors[order].value,
+      image: images[order].value,
       point: モノポリー.first_point,
-    },
-    {
-      name: 'わたし',
-      game_id: モノポリー.game_id,
-      order: 1,
-      color: colors[1][0],
-      image: images[1][0],
-      point: モノポリー.first_point,
-    },
-    {
-      name: 'おとな(1)',
-      game_id: モノポリー.game_id,
-      order: 2,
-      color: colors[2][0],
-      image: images[2][0],
-      point: モノポリー.first_point,
-    },
-    {
-      name: 'おとな(2)',
-      game_id: モノポリー.game_id,
-      order: 3,
-      color: colors[3][0],
-      image: images[3][0],
-      point: モノポリー.first_point,
-    },
-  ]);
+    })),
+  );
 }
 
 // ◎ データベースをマイグレートする

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { colors, images } from '~/const';
 import { players } from '~/db/schema';
-import { R } from '~/lib/remeda';
 
 const emit = defineEmits<{
   submit: [];
@@ -17,10 +16,10 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
 
 <template>
   <form class="flex flex-col gap-6" autocomplete="off" @submit.prevent="emit('submit')">
-    <section class="flex flex-col gap-2">
-      <div class="space-y-1">
+    <section class="flex flex-col gap-4">
+      <div class="space-y-2">
         <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">
-          名前を教えてください
+          なまえ を おしえてね
         </label>
         <input
           id="name"
@@ -31,56 +30,75 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
         />
       </div>
 
-      <div class="space-y-1">
+      <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-900 dark:text-white">
-          好きな色を教えてください
+          すきな いろ を おしえてね
         </label>
 
-        <div v-for="(group, i) of R.chunk(colors, 4)" :key="i" class="flex gap-6">
-          <label
-            v-for="[value, label] of group"
+        <div class="flex flex-wrap gap-3">
+          <div
+            v-for="{ value, label } of colors.filter(
+              ({ value }) => !exists_colors.find((color) => color === value),
+            )"
             :key="value"
-            class="inline-flex items-center gap-1 text-lg font-medium text-gray-900 dark:text-gray-300"
+            class="relative"
           >
-            <input
-              v-model="modelValue.color"
-              type="radio"
-              :value="value"
-              required
-              :disabled="!!exists_colors.find((color) => color === value)"
-              class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+            <label
+              class="inline-flex h-10 w-10 cursor-pointer gap-1 rounded-full text-lg font-medium transition-transform"
+              :class="[
+                modelValue.color === value
+                  ? `scale-125 shadow-[0_0_4px_2px_rgba(0,0,255,0.6)]`
+                  : 'scale-90 shadow-[0_0_4px_1px_rgba(0,0,0,0.25)]',
+              ]"
               :style="{
-                'accent-color': `rgb(${value})`,
+                backgroundColor: `rgb(${value})`,
               }"
-            />
-            <span :style="{ color: `rgb(${value})` }"> ■ </span>
-            <span class="text-sm"> {{ label }} </span>
-          </label>
+              :title="label"
+            >
+              <input
+                v-model="modelValue.color"
+                type="radio"
+                :value="value"
+                required
+                class="sr-only"
+              />
+            </label>
+          </div>
         </div>
       </div>
 
-      <div class="space-y-1">
+      <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-900 dark:text-white">
-          好きな形を教えてください
+          すきな え を おしえてね
         </label>
 
-        <div v-for="(group, i) of R.chunk(images, 3)" :key="i" class="flex gap-6">
-          <label
-            v-for="[value, label] of group"
+        <div class="flex flex-wrap gap-3">
+          <div
+            v-for="{ value, label } of images.filter(
+              ({ value }) => !exists_images.find((image) => image === value),
+            )"
             :key="value"
-            class="inline-flex items-center gap-1 text-lg font-medium text-gray-900 dark:text-gray-300"
+            class="relative"
           >
-            <input
-              v-model="modelValue.image"
-              type="radio"
-              :value="value"
-              required
-              :disabled="!!exists_images.find((image) => image === value)"
-              class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-            />
-            <img :src="value" />
-            <span class="text-sm"> {{ label }} </span>
-          </label>
+            <label
+              class="inline-flex h-12 w-12 cursor-pointer items-center justify-center gap-1 rounded-full text-lg font-medium transition-transform"
+              :class="[
+                modelValue.image === value
+                  ? `scale-125 shadow-[0_0_4px_2px_rgba(0,0,255,0.6)]`
+                  : 'scale-90 shadow-[0_0_4px_1px_rgba(0,0,0,0.25)]',
+              ]"
+              :title="label"
+            >
+              <input
+                v-model="modelValue.image"
+                type="radio"
+                :value="value"
+                required
+                class="sr-only"
+              />
+              <img :src="value" height="40" width="40" :alt="label" />
+            </label>
+          </div>
         </div>
       </div>
     </section>

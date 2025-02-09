@@ -50,8 +50,8 @@ async function handleSubmit() {
 <template>
   <div class="p-4 sm:w-96">
     <header class="mb-4 text-lg font-bold capitalize">
-      <span class="text-blue-600 dark:text-blue-500">{{ player.order }}人目</span>
-      の ひと は？？？
+      <span class="text-blue-600 dark:text-blue-500">{{ player.order + 1 }}人目</span>
+      の ひと のことをおしえてね
     </header>
 
     <PlayerForm
