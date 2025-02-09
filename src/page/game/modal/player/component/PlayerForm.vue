@@ -96,7 +96,7 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
                 required
                 class="sr-only"
               />
-              <img :src="value" height="40" width="40" :alt="label" />
+              <img :src="value" height="48" width="48" :alt="label" />
             </label>
           </div>
         </div>

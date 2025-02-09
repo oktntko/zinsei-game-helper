@@ -49,7 +49,9 @@ watchEffect(() => {
           class="absolute opacity-0"
           :value="player.order"
         />
-        <img :src="player.image" width="40" height="40" class="h-10 w-10" />
+        <div class="flex h-10 w-10 items-center justify-center">
+          <img :src="player.image" width="40" height="40" />
+        </div>
         <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {{ player.name }}
         </h5>
