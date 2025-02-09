@@ -13,9 +13,9 @@
   </head>
   <script>
     (function (l) {
+      console.log('index', l);
       if (l.hash) {
-        console.log('index', l);
-        window.history.replaceState(null, null, l.hash.slice(1));
+        window.history.replaceState(null, '', l.pathname);
       }
     })(window.location);
   </script>
