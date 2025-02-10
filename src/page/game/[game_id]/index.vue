@@ -50,42 +50,42 @@ async function handleNext() {
 
 <template>
   <div class="flex h-dvh flex-col overflow-hidden">
-    <header
-      class="z-10 flex shrink-0 justify-center gap-2 rounded-b-sm bg-gray-600 px-2 py-2 shadow"
-    >
-      <RouterLink
-        :to="{
-          name: '/game/',
-        }"
-        class="group/item inline-flex flex-col items-center justify-center text-gray-300"
-      >
-        <div
-          class="icon-[weui--back2-outlined] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-        ></div>
-      </RouterLink>
+    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow">
+      <div class="container mx-auto flex max-w-xl items-center justify-center gap-2 px-2 py-2">
+        <RouterLink
+          :to="{
+            name: '/game/',
+          }"
+          class="group/item inline-flex flex-col items-center justify-center text-gray-300"
+        >
+          <div
+            class="icon-[weui--back2-outlined] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+          ></div>
+        </RouterLink>
 
-      <div class="flex-1 overflow-hidden truncate text-2xl text-yellow-500">
-        {{ game.name }}
+        <div class="flex-1 overflow-hidden truncate text-2xl text-yellow-500">
+          {{ game.name }}
+        </div>
+
+        <RouterLink
+          :to="{
+            name: '/game/[game_id]/setting/',
+            params: {
+              game_id: game.game_id,
+            },
+          }"
+          class="group/item inline-flex flex-col items-center justify-center text-gray-300"
+        >
+          <div
+            class="icon-[uil--setting] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+          ></div>
+        </RouterLink>
       </div>
-
-      <RouterLink
-        :to="{
-          name: '/game/[game_id]/setting/',
-          params: {
-            game_id: game.game_id,
-          },
-        }"
-        class="group/item inline-flex flex-col items-center justify-center text-gray-300"
-      >
-        <div
-          class="icon-[uil--setting] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-        ></div>
-      </RouterLink>
     </header>
 
     <main
       v-if="currentPlayerList.length"
-      class="flex flex-1 snap-y snap-mandatory flex-col gap-1 overflow-y-auto scroll-smooth p-1 sm:gap-2 sm:p-2"
+      class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 sm:gap-2 sm:p-2"
     >
       <Player
         v-for="(player, i) of player_list"
@@ -99,7 +99,7 @@ async function handleNext() {
     </main>
     <RouterLink
       v-else
-      class="flex flex-1 snap-y snap-mandatory flex-col items-center justify-center gap-1 overflow-y-auto scroll-smooth p-1 sm:gap-2 sm:p-2"
+      class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 sm:gap-2 sm:p-2"
       :to="{
         name: '/game/[game_id]/setting/player',
         params: {
@@ -110,72 +110,72 @@ async function handleNext() {
       あそぶひとをふやそう
     </RouterLink>
 
-    <footer
-      class="z-10 flex h-12 shrink-0 justify-center rounded-t-sm bg-white/70 text-gray-900 shadow backdrop-blur"
-    >
-      <div class="ms-6 flex h-full flex-1 justify-center">
+    <footer class="z-10 shrink-0 rounded-t-sm bg-white/70 text-gray-900 shadow">
+      <div class="container mx-auto flex h-12 max-w-xl justify-center gap-2 px-2 py-2">
+        <div class="ms-6 flex h-full flex-1 justify-center">
+          <button
+            type="button"
+            class="group/item inline-flex flex-1 flex-col items-center justify-center"
+            :disabled="loading"
+          >
+            <span
+              class="icon-[solar--menu-dots-circle-broken] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+            ></span>
+            <span class="text-xs"> メニュー </span>
+          </button>
+          <button
+            type="button"
+            class="group/item inline-flex flex-1 flex-col items-center justify-center disabled:text-gray-500"
+            :disabled="loading"
+            @click="
+              () => {
+                const newest = historyList.shift();
+                if (newest) {
+                  currentPlayerList = newest;
+                  player_list = newest;
+                  turn = turn - 1 >= 0 ? turn - 1 : player_list.length - 1;
+                  $toast.success(`まえにもどしたよ`);
+                } else {
+                  $toast.info(`もうもどせないよ`);
+                }
+              }
+            "
+          >
+            <span
+              class="icon-[mynaui--undo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+            ></span>
+            <span class="text-xs"> まえにもどす </span>
+          </button>
+          <button
+            type="button"
+            class="group/item inline-flex flex-1 flex-col items-center justify-center"
+            :disabled="loading"
+            @click="handleNext"
+          >
+            <span
+              class="icon-[formkit--submit] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+            ></span>
+            <span class="text-xs"> つぎへ </span>
+          </button>
+        </div>
+
         <button
           type="button"
-          class="group/item inline-flex flex-1 flex-col items-center justify-center"
-          :disabled="loading"
-        >
-          <span
-            class="icon-[solar--menu-dots-circle-broken] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></span>
-          <span class="text-xs"> メニュー </span>
-        </button>
-        <button
-          type="button"
-          class="group/item inline-flex flex-1 flex-col items-center justify-center disabled:text-gray-500"
+          class="relative w-16"
           :disabled="loading"
           @click="
-            () => {
-              const newest = historyList.shift();
-              if (newest) {
-                currentPlayerList = newest;
-                player_list = newest;
-                turn = turn - 1 >= 0 ? turn - 1 : player_list.length - 1;
-                $toast.success(`まえにもどしたよ`);
-              } else {
-                $toast.info(`もうもどせないよ`);
-              }
+            async () => {
+              await $modal.open({
+                component: ModalSpinwheel,
+              });
             }
           "
         >
-          <span
-            class="icon-[mynaui--undo-solid] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></span>
-          <span class="text-xs"> まえにもどす </span>
-        </button>
-        <button
-          type="button"
-          class="group/item inline-flex flex-1 flex-col items-center justify-center"
-          :disabled="loading"
-          @click="handleNext"
-        >
-          <span
-            class="icon-[formkit--submit] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></span>
-          <span class="text-xs"> つぎへ </span>
+          <Roulette
+            class="absolute -bottom-4 -right-4 h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
+          ></Roulette>
         </button>
       </div>
-
-      <button
-        type="button"
-        class="relative w-16"
-        :disabled="loading"
-        @click="
-          async () => {
-            await $modal.open({
-              component: ModalSpinwheel,
-            });
-          }
-        "
-      >
-        <Roulette
-          class="absolute bottom-[-12px] right-[-12px] h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
-        ></Roulette>
-      </button>
     </footer>
   </div>
 </template>

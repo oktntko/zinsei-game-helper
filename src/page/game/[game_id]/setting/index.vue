@@ -108,7 +108,9 @@ async function handleDelete() {
 </script>
 
 <template>
-  <main class="flex flex-1 flex-col gap-2 overflow-y-auto p-2 pb-8">
+  <main
+    class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 sm:gap-2 sm:p-2"
+  >
     <!-- 基礎情報 -->
 
     <div class="space-y-1">
