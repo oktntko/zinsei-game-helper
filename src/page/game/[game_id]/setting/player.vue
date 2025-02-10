@@ -148,40 +148,41 @@ async function handleDelete(player: typeof players.$inferSelect) {
           <span class="icon-[tabler--trash] h-6 w-6" />
         </button>
       </div>
+
+      <button
+        type="button"
+        class="relative flex h-24 w-full shrink-0 items-center justify-center rounded border-4 border-dashed border-gray-300 bg-gray-50 p-6 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500"
+        @click="
+          async () => {
+            const exists_colors = player_list.map((x) => x.color);
+            const exists_images = player_list.map((x) => x.image);
+
+            const player = await $modal.open<typeof players.$inferSelect>({
+              component: ModalNewPlayer,
+              componentProps: {
+                game_id: modelValue.game_id,
+                order: player_list.length,
+                initial_color: colors
+                  .map(({ value }) => value)
+                  .filter((color) => !exists_colors.includes(color))[0],
+                initial_image: images
+                  .map(({ value }) => value)
+                  .filter((image) => !exists_images.includes(image))[0],
+                exists_colors,
+                exists_images,
+              },
+            });
+
+            if (!player) return;
+
+            player_list.push(player);
+          }
+        "
+      >
+        <span class="icon-[material-symbols--add-rounded]"></span>
+        あそぶひと をふやす
+      </button>
     </main>
-
-    <button
-      type="button"
-      class="relative flex h-24 w-full shrink-0 items-center justify-center rounded border-4 border-dashed border-gray-300 bg-gray-50 p-6 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500"
-      @click="
-        async () => {
-          const exists_colors = player_list.map((x) => x.color);
-          const exists_images = player_list.map((x) => x.image);
-
-          const player = await $modal.open<typeof players.$inferSelect>({
-            component: ModalNewPlayer,
-            componentProps: {
-              game_id: modelValue.game_id,
-              order: player_list.length,
-              initial_color: colors
-                .map(({ value }) => value)
-                .filter((color) => !exists_colors.includes(color))[0],
-              initial_image: images
-                .map(({ value }) => value)
-                .filter((image) => !exists_images.includes(image))[0],
-              exists_colors,
-              exists_images,
-            },
-          });
-
-          if (!player) return;
-
-          player_list.push(player);
-        }
-      "
-    >
-      <span class="icon-[material-symbols--add-rounded]"></span>あそぶひと をふやす
-    </button>
   </div>
 </template>
 
