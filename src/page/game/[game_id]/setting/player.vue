@@ -52,7 +52,7 @@ async function handleReorder() {
       ),
     );
 
-    $toast.info(`じゅんばん を ならびかえたよ`);
+    $toast.info(`じゅんばん をならびかえたよ`);
   } finally {
     //
   }

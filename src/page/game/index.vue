@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { asc } from 'drizzle-orm';
 import { colors, images } from '~/const';
 import { db, initializeTables } from '~/db';
-import { players, type games } from '~/db/schema';
+import { games, players } from '~/db/schema';
 import ModalEditGame from '~/page/game/modal/ModalEditGame.vue';
 import ModalNewGame from '~/page/game/modal/ModalNewGame.vue';
 import ModalNewPlayer from '~/page/game/modal/player/ModalNewPlayer.vue';
@@ -26,7 +27,7 @@ const data = ref<{
 }>({ game_list: [] });
 
 onMounted(async () => {
-  data.value.game_list = await db.query.games.findMany();
+  data.value.game_list = await db.query.games.findMany({ orderBy: asc(games.name) });
 });
 type Game = typeof games.$inferSelect & { sannka_ninnzuu: number };
 
@@ -84,7 +85,7 @@ async function handleNewGame() {
 
 async function resetApp() {
   const yes = await $dialog.alert(
-    'データを初期化します。この操作は取り消せません。よろしいですか？',
+    'データを初期化します。この操作は取り消せません。\nよろしいですか？',
   );
   if (!yes) return;
 
@@ -92,7 +93,7 @@ async function resetApp() {
   try {
     await initializeTables();
 
-    data.value.game_list = await db.query.games.findMany();
+    data.value.game_list = await db.query.games.findMany({ orderBy: asc(games.name) });
   } finally {
     loading.close();
   }

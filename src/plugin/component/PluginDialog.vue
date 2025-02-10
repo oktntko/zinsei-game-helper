@@ -86,7 +86,10 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
 </script>
 
 <template>
-  <dialog ref="refDialog" :class="['max-w-xl rounded-lg shadow-xl outline-none', { open }]">
+  <dialog
+    ref="refDialog"
+    :class="['min-w-60 max-w-xl rounded-lg shadow-xl outline-none', { open }]"
+  >
     <form method="dialog">
       <header
         v-if="title"
@@ -98,7 +101,7 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
       <main class="flex items-center gap-4 px-4 py-6">
         <div
           v-if="icon"
-          class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
+          class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
           :class="{
             'bg-green-100 text-green-600' /*   */: colorset === 'green',
             'bg-yellow-100 text-yellow-600' /* */: colorset === 'yellow',
@@ -114,11 +117,20 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
         </p>
       </main>
 
-      <footer class="flex gap-4 bg-gray-50 px-4 py-3">
-        <div
-          v-if="icon"
-          class="flex w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:w-10"
-        ></div>
+      <footer class="flex items-center justify-center gap-4 bg-gray-50 px-4 py-3">
+        <button
+          v-if="cancelText"
+          type="button"
+          :class="[
+            'inline-flex items-center justify-center shadow-sm transition-all focus:outline-none focus:ring',
+            'min-w-24 rounded-md border px-4 py-2 text-sm font-medium',
+            'border-gray-300 bg-white text-gray-800 hover:bg-gray-200',
+          ]"
+          :autofocus="autofocus === 'cancel'"
+          @click="closeDelay()"
+        >
+          {{ cancelText }}
+        </button>
         <button
           v-if="confirmText"
           type="button"
@@ -138,19 +150,6 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
           @click="closeDelay(CONFIRMED_VALUE)"
         >
           {{ confirmText }}
-        </button>
-        <button
-          v-if="cancelText"
-          type="button"
-          :class="[
-            'inline-flex items-center justify-center shadow-sm transition-all focus:outline-none focus:ring',
-            'min-w-24 rounded-md border px-4 py-2 text-sm font-medium',
-            'border-gray-300 bg-white text-gray-800 hover:bg-gray-200',
-          ]"
-          :autofocus="autofocus === 'cancel'"
-          @click="closeDelay()"
-        >
-          {{ cancelText }}
         </button>
       </footer>
     </form>

@@ -40,7 +40,7 @@ const $loading = useLoading();
 
 async function handleRestart() {
   const yes = await $dialog.confirm(
-    '最初から始めます。最初のポイントに戻り、もちものはすべてリセットされます。よろしいですか？',
+    '最初から始めます。最初のポイントに戻り、もちものはすべてリセットされます。\nよろしいですか？',
   );
   if (!yes) {
     return;
@@ -86,7 +86,7 @@ async function handleRestart() {
 
 async function handleDelete() {
   const yes = await $dialog.confirm(
-    'ゲームを削除します。この操作は元に戻せません。よろしいですか？',
+    'ゲームを削除します。この操作は取り消せません。\nよろしいですか？',
   );
   if (!yes) {
     return;
@@ -109,7 +109,7 @@ async function handleDelete() {
 
 <template>
   <main
-    class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 sm:gap-2 sm:p-2"
+    class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 pb-8 sm:gap-2 sm:p-2"
   >
     <!-- 基礎情報 -->
 

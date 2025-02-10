@@ -3,7 +3,7 @@ import { asc, eq } from 'drizzle-orm';
 import { db } from '~/db';
 import { players, type games } from '~/db/schema';
 import { R } from '~/lib/remeda';
-import Player from '~/page/game/[game_id]/component/Player.vue';
+import PlayerCard from '~/page/game/[game_id]/component/PlayerCard.vue';
 import ModalSpinwheel from '~/page/game/modal/ModalSpinwheel.vue';
 import { useToast } from '~/plugin/ToastPlugin';
 
@@ -87,7 +87,7 @@ async function handleNext() {
       v-if="currentPlayerList.length"
       class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 sm:gap-2 sm:p-2"
     >
-      <Player
+      <PlayerCard
         v-for="(player, i) of player_list"
         :key="player.player_id"
         v-model:player="player_list[i]"
@@ -95,7 +95,7 @@ async function handleNext() {
         :current="currentPlayerList[i]"
         :game="game"
       >
-      </Player>
+      </PlayerCard>
     </main>
     <RouterLink
       v-else
@@ -167,12 +167,16 @@ async function handleNext() {
             async () => {
               await $modal.open({
                 component: ModalSpinwheel,
+                componentProps: {
+                  size: game.roll,
+                },
               });
             }
           "
         >
           <Roulette
             class="absolute -bottom-4 -right-4 h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
+            :size="game.roll"
           ></Roulette>
         </button>
       </div>

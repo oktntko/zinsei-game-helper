@@ -19,7 +19,7 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
     <section class="flex flex-col gap-4">
       <div class="space-y-2">
         <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">
-          なまえ を おしえてね
+          なまえ をおしえてね
         </label>
         <input
           id="name"
@@ -32,7 +32,7 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
 
       <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-900 dark:text-white">
-          すきな いろ を おしえてね
+          すきな いろ をおしえてね
         </label>
 
         <div class="flex flex-wrap gap-3">
@@ -69,7 +69,7 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
 
       <div class="space-y-2">
         <label class="block text-sm font-medium text-gray-900 dark:text-white">
-          すきな え を おしえてね
+          すきな イラスト をおしえてね
         </label>
 
         <div class="flex flex-wrap gap-3">

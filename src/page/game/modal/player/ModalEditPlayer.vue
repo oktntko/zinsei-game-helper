@@ -21,7 +21,7 @@ const player = await db.query.players.findFirst({
   where: (players, { eq }) => eq(players.player_id, props.player_id),
 });
 if (!player) {
-  throw 'がめん を こうしん してください';
+  throw 'がめんをこうしんしてください';
 }
 
 const modelValue = ref<typeof players.$inferSelect>(player);

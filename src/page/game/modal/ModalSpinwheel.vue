@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { size = 10 } = defineProps<{ size?: number }>();
+const { size = 10 } = defineProps<{ size?: 6 | 10 | 12 }>();
 
 const wheel = ref<HTMLUListElement>();
 

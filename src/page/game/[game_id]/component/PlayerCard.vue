@@ -99,7 +99,7 @@ watchEffect(() => {
             class="absolute -right-4 -top-3 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
             @click="
               async () => {
-                if (await $dialog.confirm(`${player.name} の ポイント を もとにもどしますか？`)) {
+                if (await $dialog.confirm(`${player.name} の ポイント をもとにもどしますか？`)) {
                   player.point = current.point;
                 }
               }
