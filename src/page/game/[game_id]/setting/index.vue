@@ -98,12 +98,9 @@ async function handleDelete() {
 
     router.replace({
       name: '/game/',
-      params: {
-        game_id: game.value.game_id,
-      },
     });
 
-    $toast.success('ゲームを削除しました。');
+    $toast.info(`${games.name} をけしたよ`);
   } finally {
     loading.close();
   }

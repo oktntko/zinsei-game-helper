@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { db } from '~/db';
-import type { games } from '~/db/schema';
+import { colors, images } from '~/const';
+import { db, initializeTables } from '~/db';
+import { players, type games } from '~/db/schema';
+import ModalEditGame from '~/page/game/modal/ModalEditGame.vue';
 import ModalNewGame from '~/page/game/modal/ModalNewGame.vue';
+import ModalNewPlayer from '~/page/game/modal/player/ModalNewPlayer.vue';
 
 definePage({
   alias: ['/'],
@@ -19,7 +22,7 @@ const data = ref<{
 onMounted(async () => {
   data.value.game_list = await db.query.games.findMany();
 });
-type Game = typeof games.$inferSelect;
+type Game = typeof games.$inferSelect & { sannka_ninnzuu: number };
 </script>
 
 <template>
@@ -42,22 +45,50 @@ type Game = typeof games.$inferSelect;
         ></div>
       </a>
 
-      <a
-        href="https://github.com/oktntko/zinsei-game-helper"
-        class="group/item inline-flex flex-col items-center justify-center text-gray-300"
-      >
-        <div
-          class="icon-[ic--twotone-help] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-        ></div>
-        <!-- TODO -->
-        <!-- <button
-          type="button"
-          class="inline-flex items-center gap-0.5 rounded-lg border border-blue-700 bg-white px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-800 hover:text-white focus:outline-none focus:ring-1 focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
-          @click="initializeTables"
-        >
-          しょきか
-        </button> -->
-      </a>
+      <MyDropdown menu_button_outer_class="flex items-center justify-center">
+        <template #button="{ toggle }">
+          <button
+            type="button"
+            class="group/item inline-flex flex-col items-center justify-center text-gray-300"
+            @click="toggle"
+          >
+            <span
+              class="icon-[ic--twotone-help] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+            ></span>
+            <span class="sr-only capitalize">menu</span>
+          </button>
+        </template>
+        <template #default>
+          <ul class="w-52 rounded-sm border border-gray-300 bg-white shadow-md">
+            <li>
+              <button
+                type="button"
+                class="group flex w-full items-center p-2 text-blue-600 transition duration-75 hover:bg-gray-200"
+                @click="
+                  async () => {
+                    const yes = await $dialog.alert(
+                      'データを初期化します。この操作は取り消せません。よろしいですか？',
+                    );
+                    if (!yes) return;
+
+                    const loading = $loading.open();
+                    try {
+                      await initializeTables();
+
+                      data.game_list = await db.query.games.findMany();
+                    } finally {
+                      loading.close();
+                    }
+                  }
+                "
+              >
+                <span class="icon-[bx--reset] h-4 w-4"></span>
+                <span class="ms-1 capitalize">データを初期化する</span>
+              </button>
+            </li>
+          </ul>
+        </template>
+      </MyDropdown>
     </header>
 
     <main
@@ -94,14 +125,51 @@ type Game = typeof games.$inferSelect;
               component: ModalNewGame,
             });
 
-            if (game) {
-              $router.push({
-                name: '/game/[game_id]/setting',
-                params: {
+            if (!game) return;
+
+            const player_list: (typeof players.$inferSelect)[] = [];
+            for (let order = 0; order < game.sannka_ninnzuu; order++) {
+              const exists_colors = player_list.map((x) => x.color);
+              const exists_images = player_list.map((x) => x.image);
+
+              const player = await $modal.open<typeof players.$inferSelect>({
+                component: ModalNewPlayer,
+                componentProps: {
                   game_id: game.game_id,
+                  order,
+                  initial_color: colors
+                    .map(({ value }) => value)
+                    .filter((color) => !exists_colors.includes(color))[0],
+                  initial_image: images
+                    .map(({ value }) => value)
+                    .filter((image) => !exists_images.includes(image))[0],
+                  exists_colors,
+                  exists_images,
                 },
               });
+
+              if (player) {
+                player_list.push(player);
+              } else {
+                order--;
+              }
             }
+
+            await $modal.open<Game>({
+              component: ModalEditGame,
+              componentProps: {
+                game_id: game.game_id,
+              },
+            });
+
+            $router.push({
+              name: '/game/[game_id]/',
+              params: {
+                game_id: game.game_id,
+              },
+            });
+
+            $dialog.info('ゲームをはじめよう！\nせっていはあとからかえられるよ。');
           }
         "
       >

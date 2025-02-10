@@ -4,17 +4,18 @@ import { games } from '~/db/schema';
 import { useLoading } from '~/plugin/LoadingPlugin';
 
 const emit = defineEmits<{
-  close: [typeof games.$inferSelect];
+  close: [typeof games.$inferSelect & { sannka_ninnzuu: number }];
 }>();
 
 const modelValue = ref<typeof games.$inferInsert>({
   name: '',
   description: '',
-  sannka_ninnzuu: 4,
   step: 1000,
   first_point: 5000,
   roll: 10,
 });
+
+const sannka_ninnzuu = ref(4);
 
 const $loading = useLoading();
 async function handleSubmit() {
@@ -23,7 +24,7 @@ async function handleSubmit() {
   try {
     const [game] = await db.insert(games).values(modelValue.value).returning();
 
-    emit('close', game);
+    emit('close', { ...game, sannka_ninnzuu: sannka_ninnzuu.value });
   } finally {
     loading.close();
   }
@@ -37,15 +38,37 @@ async function handleSubmit() {
       <section class="flex flex-col gap-2">
         <div class="space-y-1">
           <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">
-            ゲーム の なまえ を おしえてね
+            なんていう ゲーム？
           </label>
           <input
             id="name"
             v-model="modelValue.name"
             type="text"
             required
+            placeholder="ゲームのなまえ"
             class="block w-full rounded-lg border border-gray-300 bg-white p-2 text-lg text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           />
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-sm font-medium text-gray-900 dark:text-white">
+            なんにん で あそぶ？
+          </label>
+
+          <div v-for="n of [2, 3, 4, 5, 6]" :key="n">
+            <label
+              class="inline-flex items-center gap-1 text-lg font-medium text-gray-900 dark:text-gray-300"
+            >
+              <input
+                v-model.number="sannka_ninnzuu"
+                type="radio"
+                :value="n"
+                required
+                class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+              />
+              {{ n }} にん
+            </label>
+          </div>
         </div>
       </section>
 

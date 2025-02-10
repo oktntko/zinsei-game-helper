@@ -9,8 +9,6 @@ export const games = pgTable('game', {
   name: varchar({ length: 40 }).notNull(), /// ゲームの名前
   description: varchar({ length: 100 }).notNull(), /// ゲームの説明
 
-  sannka_ninnzuu: integer().notNull(), /// 参加人数
-
   roll: integer().notNull(), /// 出目
   step: integer().notNull(), /// 最小ポイントの増加/減少単位
   first_point: integer().notNull(), /// ゲーム開始時点のポイント
@@ -33,7 +31,7 @@ export const players = pgTable('player', {
 
   game_id: uuid()
     .notNull()
-    .references(() => games.game_id),
+    .references(() => games.game_id, { onDelete: 'cascade' }),
 
   order: integer().notNull().default(0), /// 並び
   name: varchar({ length: 40 }).notNull().default(''), /// プレイヤーの名前

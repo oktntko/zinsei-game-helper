@@ -3,9 +3,9 @@ import { asc, eq } from 'drizzle-orm';
 import { db } from '~/db';
 import { players, type games } from '~/db/schema';
 import { R } from '~/lib/remeda';
+import Player from '~/page/game/[game_id]/component/Player.vue';
 import ModalSpinwheel from '~/page/game/modal/ModalSpinwheel.vue';
 import { useToast } from '~/plugin/ToastPlugin';
-import Player from './component/Player.vue';
 
 const game = defineModel<typeof games.$inferSelect>({ required: true });
 const player_list = defineModel<(typeof players.$inferSelect)[]>('player_list', { required: true });
@@ -97,6 +97,18 @@ async function handleNext() {
       >
       </Player>
     </main>
+    <RouterLink
+      v-else
+      class="flex flex-1 snap-y snap-mandatory flex-col items-center justify-center gap-1 overflow-y-auto scroll-smooth p-1 sm:gap-2 sm:p-2"
+      :to="{
+        name: '/game/[game_id]/setting/player',
+        params: {
+          game_id: game.game_id,
+        },
+      }"
+    >
+      あそぶひとをふやそう
+    </RouterLink>
 
     <footer
       class="z-10 flex h-12 shrink-0 justify-center rounded-t-sm bg-white/70 text-gray-900 shadow backdrop-blur"

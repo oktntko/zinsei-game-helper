@@ -78,7 +78,6 @@ async function createTables() {
 	"game_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(40) NOT NULL,
 	"description" varchar(100) NOT NULL,
-	"sannka_ninnzuu" integer NOT NULL,
 	"roll" integer NOT NULL,
 	"step" integer NOT NULL,
 	"first_point" integer NOT NULL,
@@ -118,7 +117,7 @@ async function createTables() {
 );
 `,
     sql`
-ALTER TABLE "player" ADD CONSTRAINT "player_game_id_game_game_id_fk" FOREIGN KEY ("game_id") REFERENCES "public"."game"("game_id") ON DELETE no action ON UPDATE no action;
+ALTER TABLE "player" ADD CONSTRAINT "player_game_id_game_game_id_fk" FOREIGN KEY ("game_id") REFERENCES "public"."game"("game_id") ON DELETE cascade ON UPDATE no action;
 `,
   ]) {
     await db.execute(statement);
@@ -135,7 +134,6 @@ async function seedData() {
     .values({
       name: 'じんせいゲーム',
       description: `100年を振り返る壮大な人生ゲームが今ここに!`,
-      sannka_ninnzuu: 4,
       roll: 10,
       step: 1000,
       first_point: 5000,
@@ -167,7 +165,6 @@ async function seedData() {
     .values({
       name: 'ドラえもんじんせいゲーム',
       description: `ドラえもんの世界に飛び込んで夢をかなえよう!!`,
-      sannka_ninnzuu: 4,
       roll: 10,
       step: 1000,
       first_point: 5000,
@@ -199,7 +196,6 @@ async function seedData() {
     .values({
       name: 'モノポリー',
       description: `最終的に他のプレイヤーを全て破産させることを目的とする。`,
-      sannka_ninnzuu: 4,
       roll: 6,
       step: 1,
       first_point: 10,

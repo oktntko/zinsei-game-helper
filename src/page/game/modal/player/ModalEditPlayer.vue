@@ -3,9 +3,9 @@ import { eq } from 'drizzle-orm';
 import { db } from '~/db';
 import { players } from '~/db/schema';
 import { R } from '~/lib/remeda';
+import PlayerForm from '~/page/game/modal/player/component/PlayerForm.vue';
 import { useLoading } from '~/plugin/LoadingPlugin';
 import { useToast } from '~/plugin/ToastPlugin';
-import PlayerForm from './component/PlayerForm.vue';
 
 const emit = defineEmits<{
   close: [typeof players.$inferSelect];
