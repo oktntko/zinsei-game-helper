@@ -43,7 +43,7 @@ export const players = pgTable('player', {
 
   yakusoku_tegata: integer().notNull().default(0), /// 約束手形
 
-  sokugyou: varchar({ length: 40 }).notNull().default(''), /// 職業
+  syokugyou: varchar({ length: 40 }).notNull().default(''), /// 職業
   kyuuryou: integer().notNull().default(0), /// 給料
 
   is_married: boolean().notNull().default(false), /// 結婚

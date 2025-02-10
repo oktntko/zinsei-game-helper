@@ -27,36 +27,35 @@ useTitle(`せってい | ${game.value.name}`);
       </RouterLink>
 
       <div class="flex-1 overflow-hidden truncate text-2xl text-yellow-500">せってい</div>
-
-      <div class="flex gap-1 text-gray-300">
-        <RouterLink
-          :to="{
-            name: '/game/[game_id]/setting/',
-            params: { game_id: game.game_id },
-          }"
-          class="group/item inline-flex w-12 flex-col items-center justify-center"
-          exact-active-class="text-blue-500"
-        >
-          <div
-            class="icon-[simple-icons--gamejolt] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></div>
-          <div class="-mt-2 text-[8px] text-white">ゲーム</div>
-        </RouterLink>
-        <RouterLink
-          :to="{
-            name: '/game/[game_id]/setting/player',
-            params: { game_id: game.game_id },
-          }"
-          class="group/item inline-flex w-12 flex-col items-center justify-center"
-          exact-active-class="text-blue-500"
-        >
-          <div
-            class="icon-[emojione-monotone--family-man-woman-girl-girl] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
-          ></div>
-          <div class="-mt-2 text-[8px] text-white">あそぶひと</div>
-        </RouterLink>
-      </div>
     </header>
+    <div class="flex shrink-0 justify-center gap-4 bg-gray-50 p-2 text-gray-800 shadow">
+      <RouterLink
+        :to="{
+          name: '/game/[game_id]/setting/',
+          params: { game_id: game.game_id },
+        }"
+        class="group/item inline-flex items-center justify-center gap-1 rounded p-2"
+        exact-active-class="text-blue-500 bg-blue-100/50"
+      >
+        <div
+          class="icon-[simple-icons--gamejolt] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+        ></div>
+        <div class="text-sm">ゲーム</div>
+      </RouterLink>
+      <RouterLink
+        :to="{
+          name: '/game/[game_id]/setting/player',
+          params: { game_id: game.game_id },
+        }"
+        class="group/item inline-flex items-center justify-center gap-1 rounded p-2"
+        exact-active-class="text-blue-500 bg-blue-100/50"
+      >
+        <div
+          class="icon-[emojione-monotone--family-man-woman-girl-girl] h-6 w-6 transition-transform duration-100 group-hover/item:scale-125"
+        ></div>
+        <div class="text-sm">あそぶひと</div>
+      </RouterLink>
+    </div>
 
     <RouterView v-slot="{ Component }">
       <template v-if="Component">

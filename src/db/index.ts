@@ -101,7 +101,7 @@ async function createTables() {
 	"image" varchar(100) DEFAULT '' NOT NULL,
 	"point" integer DEFAULT 0 NOT NULL,
 	"yakusoku_tegata" integer DEFAULT 0 NOT NULL,
-	"sokugyou" varchar(40) DEFAULT '' NOT NULL,
+	"syokugyou" varchar(40) DEFAULT '' NOT NULL,
 	"kyuuryou" integer DEFAULT 0 NOT NULL,
 	"is_married" boolean DEFAULT false NOT NULL,
 	"children" integer DEFAULT 0 NOT NULL,

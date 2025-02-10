@@ -128,7 +128,7 @@ watchEffect(() => {
           <button
             v-for="sign of [-1, 1]"
             :key="sign"
-            class="w-20 rounded-md border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            class="w-20 rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             :class="[
               sign > 0
                 ? 'border-green-400 hover:bg-green-100 hover:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)] focus:bg-green-100 focus:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)] active:bg-green-100 active:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)]'
