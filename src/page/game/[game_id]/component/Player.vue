@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { games, players } from '~/db/schema';
-import TogglePlusMinus from './TogglePlusMinus.vue';
 
 const props = defineProps<{
   game: typeof games.$inferSelect;
@@ -10,7 +9,7 @@ const props = defineProps<{
 const player = defineModel<typeof players.$inferSelect>('player', { required: true });
 const turn = defineModel<number>('turn', { required: true });
 
-const isPlus = ref<boolean>(true);
+const mul = ref<1 | 10>(1);
 
 const pointDiff = computed(() => {
   return player.value.point - props.current.point;
@@ -112,28 +111,39 @@ watchEffect(() => {
       </template>
 
       <div class="flex items-center justify-center gap-2">
-        <div class="ml-[60px] inline-flex flex-1 gap-1">
-          <div v-for="i of [1, 10]" :key="i" class="flex-1">
-            <button
-              class="w-full rounded-md border bg-white px-2 py-1 text-sm text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              :class="[
-                isPlus
-                  ? 'border-blue-400 hover:bg-blue-100 hover:shadow-[0_0_2px_2px_rgba(96,165,250,0.25)] focus:bg-blue-100 focus:shadow-[0_0_2px_2px_rgba(96,165,250,0.25)] active:bg-blue-100 active:shadow-[0_0_2px_2px_rgba(96,165,250,0.25)]'
-                  : 'border-red-400 hover:bg-red-100 hover:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] focus:bg-red-100 focus:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] active:bg-red-100 active:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)]',
-              ]"
-              type="button"
-              @click="
-                () => {
-                  player.point = player.point + (isPlus ? 1 : -1) * (game.step * i);
-                }
-              "
-            >
-              {{ isPlus ? '+' : '-' }}{{ (game.step * i).toLocaleString() }}
-            </button>
-          </div>
+        <div class="flex items-center justify-center gap-2">
+          <label
+            v-for="i of [1, 10]"
+            :key="i"
+            class="relative inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full font-medium shadow-[0_0_2px_1px_rgba(0,0,0,0.25)] transition-transform"
+            :class="[mul === i ? `scale-125` : 'scale-90']"
+          >
+            <span class="icon-[uim--multiply] text-xs"></span>
+            <span class="-ml-0.5 text-xs">{{ i }}</span>
+            <input v-model="mul" type="radio" :value="i" class="sr-only" />
+          </label>
         </div>
 
-        <TogglePlusMinus v-model="isPlus"></TogglePlusMinus>
+        <div class="flex items-center justify-center gap-2">
+          <button
+            v-for="sign of [-1, 1]"
+            :key="sign"
+            class="w-20 rounded-md border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            :class="[
+              sign > 0
+                ? 'border-green-400 hover:bg-green-100 hover:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)] focus:bg-green-100 focus:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)] active:bg-green-100 active:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)]'
+                : 'border-red-400 hover:bg-red-100 hover:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] focus:bg-red-100 focus:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] active:bg-red-100 active:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)]',
+            ]"
+            type="button"
+            @click="
+              () => {
+                player.point = player.point + game.step * sign * mul;
+              }
+            "
+          >
+            {{ sign > 0 ? '+' : '' }}{{ (game.step * sign * mul).toLocaleString() }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
