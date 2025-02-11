@@ -1,0 +1,1 @@
+import{d as a,w as r,c as s,a as n,p as c,r as _,o as p}from"./index.js";import"@electric-sql/pglite";const m={class:"min-h-dvh bg-gradient-to-b from-gray-200 to-gray-100"},g=a({__name:"game",async setup(i){let e,t;return[e,t]=r(()=>c()),await e,t(),(d,l)=>{const o=_("RouterView");return p(),s("div",m,[n(o)])}}});export{g as default};

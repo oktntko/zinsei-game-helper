@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/zinsei-game-helper/sw.js', { scope: '/zinsei-game-helper/' })})}
