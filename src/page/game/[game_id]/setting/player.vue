@@ -46,9 +46,14 @@ const $toast = useToast();
 
 async function handleReorder() {
   try {
-    await Promise.all(
+    player_list.value = await Promise.all(
       player_list.value.map(async (player, order) =>
-        db.update(players).set({ order }).where(eq(players.player_id, player.player_id)),
+        db
+          .update(players)
+          .set({ order })
+          .where(eq(players.player_id, player.player_id))
+          .returning()
+          .then(([x]) => x),
       ),
     );
 
@@ -66,7 +71,18 @@ async function handleDelete(player: typeof players.$inferSelect) {
   try {
     await db.delete(players).where(eq(players.player_id, player.player_id));
 
-    player_list.value = player_list.value.filter((x) => x.player_id !== player.player_id);
+    player_list.value = await Promise.all(
+      player_list.value
+        .filter((x) => x.player_id !== player.player_id)
+        .map(async (player, order) =>
+          db
+            .update(players)
+            .set({ order })
+            .where(eq(players.player_id, player.player_id))
+            .returning()
+            .then(([x]) => x),
+        ),
+    );
 
     $toast.info(`${player.name} をけしたよ`);
   } finally {
