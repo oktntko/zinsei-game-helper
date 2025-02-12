@@ -56,11 +56,8 @@ async function handleRestart() {
             ...player,
             point: game.value.first_point,
             yakusoku_tegata: 0,
-            syokugyou: '',
-            kyuuryou: 0,
             is_married: false,
             children: 0,
-            items: [],
             myhome: { name: '', value: 0 },
             kabukenn: 0,
             seimei_hokenn: false,
@@ -250,26 +247,8 @@ async function handleDelete() {
 
     <div class="space-y-1">
       <label class="flex cursor-pointer items-center justify-between">
-        <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 職業 </span>
-        <input v-model="game.enable_syokugyou" type="checkbox" class="peer hidden" />
-        <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
-        ></div>
-      </label>
-    </div>
-    <div class="space-y-1">
-      <label class="flex cursor-pointer items-center justify-between">
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 結婚・子ども </span>
         <input v-model="game.enable_marry" type="checkbox" class="peer hidden" />
-        <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
-        ></div>
-      </label>
-    </div>
-    <div class="space-y-1">
-      <label class="flex cursor-pointer items-center justify-between">
-        <span class="text-base font-medium text-gray-900 dark:text-gray-300"> お宝 </span>
-        <input v-model="game.enable_items" type="checkbox" class="peer hidden" />
         <div
           class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
         ></div>

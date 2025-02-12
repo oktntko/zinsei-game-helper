@@ -15,9 +15,7 @@ export const games = pgTable('game', {
   /// ゲームシステム
   enable_syakkinn_yakusoku_tegata: boolean().notNull().default(true), /// 借金・約束手形
   yakusoku_tegata: integer().notNull().default(20000), /// 約束手形の金額
-  enable_syokugyou: boolean().notNull().default(true), /// 職業
   enable_marry: boolean().notNull().default(true), /// 結婚・子ども
-  enable_items: boolean().notNull().default(true), /// お宝
   enable_myhome: boolean().notNull().default(true), /// マイホーム
   enable_kabukenn: boolean().notNull().default(true), /// 株券
   enable_hokenn_syoukenn: boolean().notNull().default(true), /// 保険証券
@@ -41,13 +39,9 @@ export const players = pgTable('player', {
 
   yakusoku_tegata: integer().notNull().default(0), /// 約束手形
 
-  syokugyou: varchar({ length: 40 }).notNull().default(''), /// 職業
-  kyuuryou: integer().notNull().default(0), /// 給料
-
   is_married: boolean().notNull().default(false), /// 結婚
   children: integer().notNull().default(0), /// 子ども
 
-  items: jsonb().$type<{ name: string; value: number }[]>().default([]), /// お宝
   myhome: jsonb().$type<{ name: string; value: number }>().default({ name: '', value: 0 }), /// マイホーム
 
   kabukenn: integer().notNull().default(0), /// 株券
