@@ -12,7 +12,7 @@ export const colors = [
   { value: '34, 41, 49', /*      */ label: '黒' /*         */ },
   { value: '255, 255, 255', /*   */ label: '白' /*         */ },
 ];
-const BASE_URL = import.meta.env.BASE_URL;
+export const BASE_URL = import.meta.env.BASE_URL;
 // https://hpgpixer.jp/
 export const images = [
   { value: `${BASE_URL}images/mushitori_boy.gif`, /*       */ label: '男の子' /*   */ },
@@ -35,4 +35,18 @@ export const images = [
   { value: `${BASE_URL}images/ufo_9.gif`, /*               */ label: 'UFO' /*      */ },
   { value: `${BASE_URL}images/shinkansen_n700_3an.gif`, /* */ label: '新幹線' /*   */ },
   { value: `${BASE_URL}images/yacht.gif`, /*               */ label: 'ヨット' /*   */ },
+];
+
+export const housings = [
+  `${BASE_URL}images/housing_01.gif`,
+  `${BASE_URL}images/housing_02.gif`,
+  `${BASE_URL}images/housing_03.gif`,
+  `${BASE_URL}images/housing_04.gif`,
+  `${BASE_URL}images/housing_05.gif`,
+  `${BASE_URL}images/housing_06.gif`,
+  `${BASE_URL}images/housing_07.gif`,
+  `${BASE_URL}images/housing_08.gif`,
+  `${BASE_URL}images/housing_09.gif`,
+  `${BASE_URL}images/housing_10.gif`,
+  `${BASE_URL}images/housing_11.gif`,
 ];

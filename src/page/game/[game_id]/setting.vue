@@ -8,7 +8,7 @@ useTitle(`せってい | ${game.value.name}`);
 </script>
 
 <template>
-  <div class="flex h-dvh flex-col overflow-hidden">
+  <div class="flex h-lvh flex-col overflow-hidden">
     <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow">
       <div class="container mx-auto flex max-w-xl items-center justify-center gap-2 px-2 py-2">
         <RouterLink
@@ -77,7 +77,7 @@ useTitle(`せってい | ${game.value.name}`);
 
               <!-- loading state -->
               <template #fallback>
-                <div class="flex min-h-dvh grow flex-col items-center justify-center gap-4">
+                <div class="flex min-h-lvh grow flex-col items-center justify-center gap-4">
                   <span
                     class="icon-[line-md--loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
                   ></span>

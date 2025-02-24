@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { eq } from 'drizzle-orm';
 import * as R from 'remeda';
+import { housings } from '~/const';
 import { db } from '~/db';
 import { games, players } from '~/db/schema';
 import { useDialog } from '~/plugin/DialogPlugin';
@@ -58,7 +59,7 @@ async function handleRestart() {
             yakusoku_tegata: 0,
             is_married: false,
             children: 0,
-            myhome: { name: '', value: 0 },
+            myhome: { image: housings[0], value: 0 },
             kabukenn: 0,
             seimei_hokenn: false,
             kasai_hokenn: false,

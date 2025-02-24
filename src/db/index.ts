@@ -81,12 +81,12 @@ async function createTables() {
 	"roll" integer NOT NULL,
 	"step" integer NOT NULL,
 	"first_point" integer NOT NULL,
-	"enable_syakkinn_yakusoku_tegata" boolean DEFAULT true NOT NULL,
+	"enable_syakkinn_yakusoku_tegata" boolean DEFAULT false NOT NULL,
 	"yakusoku_tegata" integer DEFAULT 20000 NOT NULL,
-	"enable_marry" boolean DEFAULT true NOT NULL,
-	"enable_myhome" boolean DEFAULT true NOT NULL,
-	"enable_kabukenn" boolean DEFAULT true NOT NULL,
-	"enable_hokenn_syoukenn" boolean DEFAULT true NOT NULL
+	"enable_marry" boolean DEFAULT false NOT NULL,
+	"enable_myhome" boolean DEFAULT false NOT NULL,
+	"enable_kabukenn" boolean DEFAULT false NOT NULL,
+	"enable_hokenn_syoukenn" boolean DEFAULT false NOT NULL
 );
   `,
     sql`CREATE TABLE "player" (
@@ -100,7 +100,7 @@ async function createTables() {
 	"yakusoku_tegata" integer DEFAULT 0 NOT NULL,
 	"is_married" boolean DEFAULT false NOT NULL,
 	"children" integer DEFAULT 0 NOT NULL,
-	"myhome" jsonb DEFAULT '{"name":"","value":0}'::jsonb,
+	"myhome" jsonb DEFAULT '{"image":"","value":0}'::jsonb,
 	"kabukenn" integer DEFAULT 0 NOT NULL,
 	"seimei_hokenn" boolean DEFAULT false NOT NULL,
 	"kasai_hokenn" boolean DEFAULT false NOT NULL,

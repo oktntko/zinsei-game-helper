@@ -63,7 +63,7 @@
 
             <!-- loading state -->
             <template #fallback>
-              <div class="flex min-h-dvh grow flex-col items-center justify-center gap-4">
+              <div class="flex min-h-lvh grow flex-col items-center justify-center gap-4">
                 <span
                   class="icon-[line-md--loading-loop] h-16 w-16 text-gray-600 text-opacity-60"
                 ></span>

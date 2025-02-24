@@ -101,7 +101,7 @@ async function resetApp() {
 </script>
 
 <template>
-  <div class="flex h-dvh flex-col overflow-hidden">
+  <div class="flex h-lvh flex-col overflow-hidden">
     <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow">
       <div class="container mx-auto flex max-w-xl items-center justify-center gap-2 px-2 py-2">
         <Roulette class="h-6 w-6 scale-125 duration-100"></Roulette>
@@ -151,7 +151,7 @@ async function resetApp() {
     </header>
 
     <main
-      class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-2 overflow-y-auto scroll-smooth p-2 sm:gap-2 sm:p-2"
+      class="container mx-auto flex max-w-xl flex-1 snap-y snap-mandatory flex-col gap-4 overflow-y-auto scroll-smooth p-4 sm:gap-4 sm:p-4"
     >
       <RouterLink
         v-for="game of data.game_list"
@@ -162,7 +162,7 @@ async function resetApp() {
             game_id: game.game_id,
           },
         }"
-        class="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+        class="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:scale-105 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
       >
         <h5
           class="mb-2 truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-white"

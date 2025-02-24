@@ -13,12 +13,12 @@ export const games = pgTable('game', {
   step: integer().notNull(), /// 最小ポイントの増加/減少単位
   first_point: integer().notNull(), /// ゲーム開始時点のポイント
   /// ゲームシステム
-  enable_syakkinn_yakusoku_tegata: boolean().notNull().default(true), /// 借金・約束手形
+  enable_syakkinn_yakusoku_tegata: boolean().notNull().default(false), /// 借金・約束手形
   yakusoku_tegata: integer().notNull().default(20000), /// 約束手形の金額
-  enable_marry: boolean().notNull().default(true), /// 結婚・子ども
-  enable_myhome: boolean().notNull().default(true), /// マイホーム
-  enable_kabukenn: boolean().notNull().default(true), /// 株券
-  enable_hokenn_syoukenn: boolean().notNull().default(true), /// 保険証券
+  enable_marry: boolean().notNull().default(false), /// 結婚・子ども
+  enable_myhome: boolean().notNull().default(false), /// マイホーム
+  enable_kabukenn: boolean().notNull().default(false), /// 株券
+  enable_hokenn_syoukenn: boolean().notNull().default(false), /// 保険証券
 });
 export const gameRelations = relations(games, ({ many }) => ({
   player_list: many(players),
@@ -42,7 +42,7 @@ export const players = pgTable('player', {
   is_married: boolean().notNull().default(false), /// 結婚
   children: integer().notNull().default(0), /// 子ども
 
-  myhome: jsonb().$type<{ name: string; value: number }>().default({ name: '', value: 0 }), /// マイホーム
+  myhome: jsonb().$type<{ image: string; value: number }>().default({ image: '', value: 0 }), /// マイホーム
 
   kabukenn: integer().notNull().default(0), /// 株券
   seimei_hokenn: boolean().notNull().default(false), /// 生命保険
