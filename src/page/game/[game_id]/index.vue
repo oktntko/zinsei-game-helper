@@ -52,7 +52,7 @@ const open = ref(false);
 
 <template>
   <div class="flex h-lvh flex-col overflow-hidden">
-    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow">
+    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow-sm">
       <div class="container mx-auto flex max-w-xl items-center justify-center gap-2 px-2 py-2">
         <RouterLink
           :to="{
@@ -65,7 +65,7 @@ const open = ref(false);
           ></div>
         </RouterLink>
 
-        <div class="flex-1 overflow-hidden truncate text-2xl text-yellow-500">
+        <div class="flex-1 truncate overflow-hidden text-2xl text-yellow-500">
           {{ game.name }}
         </div>
 
@@ -112,7 +112,7 @@ const open = ref(false);
       あそぶひとをふやそう
     </RouterLink>
 
-    <footer class="z-10 shrink-0 rounded-t-sm bg-white/70 text-gray-900 shadow">
+    <footer class="z-10 shrink-0 rounded-t-sm bg-white/70 text-gray-900 shadow-sm">
       <div class="container mx-auto flex h-12 max-w-xl justify-center gap-2 px-2 py-2">
         <div class="relative ms-6 flex h-full flex-1 justify-center">
           <OnClickOutside
@@ -138,16 +138,16 @@ const open = ref(false);
           >
             <div
               v-show="open"
-              class="absolute -left-6 bottom-9 z-10"
+              class="absolute bottom-9 -left-6 z-10"
               role="menu"
               aria-orientation="vertical"
               tabindex="-1"
             >
-              <ul class="w-48 rounded-sm border border-gray-300 bg-white shadow-md">
+              <ul class="w-48 rounded-xs border border-gray-300 bg-white shadow-md">
                 <li>
                   <button
                     type="button"
-                    class="group flex w-full items-center p-2 text-blue-600 transition duration-75 disabled:text-gray-500"
+                    class="group flex w-full cursor-pointer items-center p-2 text-blue-600 transition duration-75 disabled:text-gray-500"
                     disabled
                   >
                     <span class="icon-[noto--money-bag] h-4 w-4"></span>
@@ -160,7 +160,7 @@ const open = ref(false);
           </Transition>
           <button
             type="button"
-            class="group/item inline-flex flex-1 flex-col items-center justify-center disabled:text-gray-500"
+            class="group/item inline-flex flex-1 cursor-pointer flex-col items-center justify-center disabled:text-gray-500"
             :disabled="loading"
             @click="
               () => {
@@ -183,7 +183,7 @@ const open = ref(false);
           </button>
           <button
             type="button"
-            class="group/item inline-flex flex-1 flex-col items-center justify-center"
+            class="group/item inline-flex flex-1 cursor-pointer flex-col items-center justify-center"
             :disabled="loading"
             @click="handleNext"
           >
@@ -196,7 +196,7 @@ const open = ref(false);
 
         <button
           type="button"
-          class="relative w-16"
+          class="relative w-16 cursor-pointer"
           :disabled="loading"
           @click="
             async () => {
@@ -210,7 +210,7 @@ const open = ref(false);
           "
         >
           <Roulette
-            class="absolute -bottom-4 -right-4 h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
+            class="absolute -right-4 -bottom-4 h-20 w-20 -rotate-12 transition-transform duration-100 hover:scale-125"
             :size="game.roll"
           ></Roulette>
         </button>

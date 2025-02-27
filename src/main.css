@@ -1,7 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
+@plugin '../iconify.mjs';
+
+@theme {
+  --font-sans: 'DotGothic16', sans-serif;
+  --font-mono: 'M PLUS 1 Code', monospace;
+}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

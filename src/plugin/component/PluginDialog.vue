@@ -27,25 +27,8 @@ const refDialog = ref<HTMLDialogElement>();
 const open = ref(false);
 
 onMounted(() => {
-  if (refDialog.value) {
-    const dialog = refDialog.value;
-    dialog.showModal();
-
-    // ESCキーでキャンセルするとき閉じる
-    dialog.addEventListener('cancel', (e) => {
-      e.preventDefault();
-      closeDelay();
-    });
-
-    // ダイアログの外側がクリックされたとき閉じる
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) {
-        closeDelay();
-      }
-    });
-
-    open.value = true;
-  }
+  refDialog.value?.showModal();
+  open.value = true;
 });
 
 /**
@@ -88,7 +71,30 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
 <template>
   <dialog
     ref="refDialog"
-    :class="['min-w-60 max-w-xl rounded-lg shadow-xl outline-none', { open }]"
+    :class="[
+      'm-auto max-w-xl min-w-60 rounded-lg shadow-xl outline-hidden',
+      { open },
+      'translate-y-4 scale-100 transform opacity-0 transition duration-200 ease-out sm:translate-y-4 sm:scale-95',
+      '[&.open]:translate-y-0 [&.open]:opacity-100 [&.open]:sm:scale-100',
+      'backdrop:bg-gray-400/50 backdrop:opacity-0 backdrop:transition backdrop:duration-200 backdrop:ease-out',
+      '[&.open]:backdrop:opacity-100',
+    ]"
+    @click="
+      (e) => {
+        // ダイアログの外側がクリックされたとき閉じる
+        if (e.target === refDialog) {
+          e.preventDefault();
+          closeDelay();
+        }
+      }
+    "
+    @cancel="
+      (e: Event) => {
+        // ESCキーでキャンセルするとき閉じる
+        e.preventDefault();
+        closeDelay();
+      }
+    "
   >
     <form method="dialog">
       <header
@@ -101,7 +107,7 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
       <main class="flex items-center gap-4 px-4 py-6">
         <div
           v-if="icon"
-          class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
+          class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10"
           :class="{
             'bg-green-100 text-green-600' /*   */: colorset === 'green',
             'bg-yellow-100 text-yellow-600' /* */: colorset === 'yellow',
@@ -112,7 +118,7 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
           <span :class="['h-6 w-6', icon]"></span>
         </div>
 
-        <p class="whitespace-pre-wrap text-sm text-gray-500">
+        <p class="text-sm whitespace-pre-wrap text-gray-500">
           {{ message }}
         </p>
       </main>
@@ -122,7 +128,7 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
           v-if="cancelText"
           type="button"
           :class="[
-            'inline-flex items-center justify-center shadow-sm transition-all focus:outline-none focus:ring',
+            'inline-flex cursor-pointer items-center justify-center shadow-xs transition-colors focus:ring-3 focus:outline-hidden',
             'min-w-24 rounded-md border px-4 py-2 text-sm font-medium',
             'border-gray-300 bg-white text-gray-800 hover:bg-gray-200',
           ]"
@@ -135,7 +141,7 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
           v-if="confirmText"
           type="button"
           :class="[
-            'inline-flex items-center justify-center shadow-sm transition-all focus:outline-none focus:ring',
+            'inline-flex cursor-pointer items-center justify-center shadow-xs transition-colors focus:ring-3 focus:outline-hidden',
             'min-w-24 rounded-md border px-4 py-2 text-sm font-medium',
             colorset === 'blue' &&
               'border-blue-700 bg-white text-blue-700 hover:bg-blue-800 hover:text-white',
@@ -155,23 +161,3 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
     </form>
   </dialog>
 </template>
-
-<style scoped lang="postcss">
-dialog {
-  @apply translate-y-4 transform opacity-0 transition duration-200 ease-out sm:translate-y-0 sm:scale-95;
-}
-
-dialog.open {
-  @apply translate-y-0 opacity-100 sm:scale-100;
-}
-
-dialog::backdrop,
-dialog + .backdrop {
-  @apply bg-gray-400/50 opacity-0 transition duration-150 ease-out;
-}
-
-dialog.open::backdrop,
-dialog.open + .backdrop {
-  @apply opacity-100;
-}
-</style>

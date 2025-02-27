@@ -53,7 +53,7 @@ function close() {
     >
       <div class="flex items-center gap-2">
         <div
-          class="inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-lg"
+          class="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-lg"
           :class="{
             'text-green-500 dark:text-green-200' /*   */: colorset === 'green',
             'text-yellow-500 dark:text-yellow-200' /* */: colorset === 'yellow',
@@ -65,14 +65,14 @@ function close() {
         </div>
 
         <div class="min-w-0 grow">
-          <div class="inline-block max-w-full whitespace-pre-wrap break-words text-sm">
+          <div class="inline-block max-w-full text-sm break-words whitespace-pre-wrap">
             {{ message }}
           </div>
         </div>
 
         <button
           type="button"
-          class="flex items-center justify-center rounded-full p-0.5 transition-colors hover:bg-gray-200"
+          class="flex cursor-pointer items-center justify-center rounded-full p-0.5 transition-colors hover:bg-gray-200"
           aria-label="Close"
           @click="close"
         >

@@ -9,7 +9,7 @@ useTitle(`せってい | ${game.value.name}`);
 
 <template>
   <div class="flex h-lvh flex-col overflow-hidden">
-    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow">
+    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow-sm">
       <div class="container mx-auto flex max-w-xl items-center justify-center gap-2 px-2 py-2">
         <RouterLink
           :to="{
@@ -29,13 +29,13 @@ useTitle(`せってい | ${game.value.name}`);
       </div>
     </header>
 
-    <div class="flex shrink-0 justify-center gap-4 bg-gray-50 p-2 text-gray-800 shadow">
+    <div class="flex shrink-0 justify-center gap-4 bg-gray-50 p-2 text-gray-800 shadow-sm">
       <RouterLink
         :to="{
           name: '/game/[game_id]/setting/',
           params: { game_id: game.game_id },
         }"
-        class="group/item inline-flex items-center justify-center gap-1 rounded p-2"
+        class="group/item inline-flex items-center justify-center gap-1 rounded-sm p-2"
         exact-active-class="text-blue-500 bg-blue-100/50"
       >
         <div
@@ -48,7 +48,7 @@ useTitle(`せってい | ${game.value.name}`);
           name: '/game/[game_id]/setting/player',
           params: { game_id: game.game_id },
         }"
-        class="group/item inline-flex items-center justify-center gap-1 rounded p-2"
+        class="group/item inline-flex items-center justify-center gap-1 rounded-sm p-2"
         exact-active-class="text-blue-500 bg-blue-100/50"
       >
         <div

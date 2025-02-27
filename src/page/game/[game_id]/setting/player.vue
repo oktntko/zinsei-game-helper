@@ -22,8 +22,8 @@ onMounted(async () => {
   sortable.value = Sortable.create(el, {
     animation: 150,
     handle: '.my-handle',
-    chosenClass: 'chosenClass',
-    dragClass: 'dragClass',
+    chosenClass: 'bg-blue-100',
+    dragClass: 'bg-blue-100',
 
     async onEnd(e) {
       if (e.oldIndex == null || e.newIndex == null || e.oldIndex === e.newIndex) return;
@@ -99,7 +99,7 @@ async function handleDelete(player: typeof players.$inferSelect) {
     <div
       v-for="player of player_list"
       :key="player.player_id"
-      class="relative h-24 w-full rounded border-4 bg-white py-6 pe-6 ps-2"
+      class="relative h-24 w-full rounded-sm border-4 bg-white py-6 ps-2 pe-6"
       :style="{ 'border-color': `rgb(${player.color})` }"
     >
       <div class="flex items-center gap-1">
@@ -123,7 +123,7 @@ async function handleDelete(player: typeof players.$inferSelect) {
       <button
         title="trash"
         type="button"
-        class="absolute bottom-2 right-10 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
+        class="absolute right-10 bottom-2 h-6 w-6 cursor-pointer rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
         @click="
           async () => {
             const filteredPlayerList = player_list.filter((x) => x.player_id !== player.player_id);
@@ -154,7 +154,7 @@ async function handleDelete(player: typeof players.$inferSelect) {
       <button
         title="trash"
         type="button"
-        class="absolute bottom-2 right-2 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
+        class="absolute right-2 bottom-2 h-6 w-6 cursor-pointer rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
         @click="
           async () => {
             await handleDelete(player);
@@ -167,7 +167,7 @@ async function handleDelete(player: typeof players.$inferSelect) {
 
     <button
       type="button"
-      class="relative flex h-24 w-full shrink-0 items-center justify-center rounded border-4 border-dashed border-gray-300 bg-gray-50 p-6 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500"
+      class="relative flex h-24 w-full shrink-0 cursor-pointer items-center justify-center rounded-sm border-4 border-dashed border-gray-300 bg-gray-50 p-6 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500"
       @click="
         async () => {
           const exists_colors = player_list.map((x) => x.color);
@@ -200,12 +200,3 @@ async function handleDelete(player: typeof players.$inferSelect) {
     </button>
   </main>
 </template>
-
-<style lang="postcss" scoped>
-.chosenClass {
-  @apply bg-blue-100;
-}
-.dragClass {
-  @apply bg-blue-100;
-}
-</style>

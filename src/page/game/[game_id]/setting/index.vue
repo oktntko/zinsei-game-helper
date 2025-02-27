@@ -218,7 +218,7 @@ async function handleDelete() {
 
     <!-- オプション -->
     <div
-      class="flex items-center pb-4 pt-6 text-xl text-gray-800 before:mx-4 before:flex-1 before:border-t-4 before:border-dotted before:border-gray-400 after:mx-4 after:flex-1 after:border-t-4 after:border-dotted after:border-gray-400 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600"
+      class="flex items-center pt-6 pb-4 text-xl text-gray-800 before:mx-4 before:flex-1 before:border-t-4 before:border-dotted before:border-gray-400 after:mx-4 after:flex-1 after:border-t-4 after:border-dotted after:border-gray-400 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600"
     >
       オプション
     </div>
@@ -227,7 +227,7 @@ async function handleDelete() {
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 借金・約束手形 </span>
         <input v-model="game.enable_syakkinn_yakusoku_tegata" type="checkbox" class="peer hidden" />
         <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
+          class="peer relative h-6 w-11 rounded-full bg-gray-300 peer-checked:bg-blue-600 peer-focus:outline-hidden after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"
         ></div>
       </label>
     </div>
@@ -251,7 +251,7 @@ async function handleDelete() {
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 結婚・子ども </span>
         <input v-model="game.enable_marry" type="checkbox" class="peer hidden" />
         <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
+          class="peer relative h-6 w-11 rounded-full bg-gray-300 peer-checked:bg-blue-600 peer-focus:outline-hidden after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"
         ></div>
       </label>
     </div>
@@ -260,7 +260,7 @@ async function handleDelete() {
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> マイホーム </span>
         <input v-model="game.enable_myhome" type="checkbox" class="peer hidden" />
         <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
+          class="peer relative h-6 w-11 rounded-full bg-gray-300 peer-checked:bg-blue-600 peer-focus:outline-hidden after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"
         ></div>
       </label>
     </div>
@@ -269,7 +269,7 @@ async function handleDelete() {
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 株券 </span>
         <input v-model="game.enable_kabukenn" type="checkbox" class="peer hidden" />
         <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
+          class="peer relative h-6 w-11 rounded-full bg-gray-300 peer-checked:bg-blue-600 peer-focus:outline-hidden after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"
         ></div>
       </label>
     </div>
@@ -278,14 +278,14 @@ async function handleDelete() {
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 保険証券 </span>
         <input v-model="game.enable_hokenn_syoukenn" type="checkbox" class="peer hidden" />
         <div
-          class="peer relative h-6 w-11 rounded-full bg-gray-300 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"
+          class="peer relative h-6 w-11 rounded-full bg-gray-300 peer-checked:bg-blue-600 peer-focus:outline-hidden after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"
         ></div>
       </label>
     </div>
 
     <!-- ゲームの操作 -->
     <div
-      class="flex items-center pb-4 pt-6 text-xl text-gray-800 before:mx-4 before:flex-1 before:border-t-4 before:border-dotted before:border-gray-400 after:mx-4 after:flex-1 after:border-t-4 after:border-dotted after:border-gray-400 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600"
+      class="flex items-center pt-6 pb-4 text-xl text-gray-800 before:mx-4 before:flex-1 before:border-t-4 before:border-dotted before:border-gray-400 after:mx-4 after:flex-1 after:border-t-4 after:border-dotted after:border-gray-400 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600"
     >
       ゲームの操作
     </div>
@@ -293,7 +293,7 @@ async function handleDelete() {
       <div class="flex items-center justify-between">
         <span class="text-base font-medium text-gray-900 dark:text-gray-300"> 最初から始める </span>
         <button
-          class="rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          class="cursor-pointer rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           :class="[
             'border-red-400 hover:bg-red-100 hover:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] focus:bg-red-100 focus:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] active:bg-red-100 active:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)]',
           ]"
@@ -310,7 +310,7 @@ async function handleDelete() {
           ゲームを削除する
         </span>
         <button
-          class="rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          class="cursor-pointer rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           :class="[
             'border-red-400 hover:bg-red-100 hover:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] focus:bg-red-100 focus:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)] active:bg-red-100 active:shadow-[0_0_2px_2px_rgba(248,113,113,0.25)]',
           ]"

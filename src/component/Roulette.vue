@@ -23,7 +23,7 @@ const { size = 10 } = defineProps<{ size?: number }>();
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 /* https://dev.to/madsstoumann/wheel-of-fortune-with-css-p-pi-1ne9 */
 :where(.ui-wheel-of-fortune) {
   all: unset;

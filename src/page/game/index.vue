@@ -102,11 +102,11 @@ async function resetApp() {
 
 <template>
   <div class="flex h-lvh flex-col overflow-hidden">
-    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow">
+    <header class="z-10 shrink-0 rounded-b-sm bg-gray-600 shadow-sm">
       <div class="container mx-auto flex max-w-xl items-center justify-center gap-2 px-2 py-2">
         <Roulette class="h-6 w-6 scale-125 duration-100"></Roulette>
 
-        <div class="flex-1 overflow-hidden truncate text-2xl text-yellow-500">
+        <div class="flex-1 truncate overflow-hidden text-2xl text-yellow-500">
           じんせいゲームヘルパー
         </div>
 
@@ -123,7 +123,7 @@ async function resetApp() {
           <template #button="{ toggle }">
             <button
               type="button"
-              class="group/item inline-flex flex-col items-center justify-center text-gray-300"
+              class="group/item inline-flex cursor-pointer flex-col items-center justify-center text-gray-300"
               @click="toggle"
             >
               <span
@@ -133,11 +133,11 @@ async function resetApp() {
             </button>
           </template>
           <template #default>
-            <ul class="w-52 rounded-sm border border-gray-300 bg-white shadow-md">
+            <ul class="w-52 rounded-xs border border-gray-300 bg-white shadow-md">
               <li>
                 <button
                   type="button"
-                  class="group flex w-full items-center p-2 text-blue-600 transition duration-75 hover:bg-gray-200"
+                  class="group flex w-full cursor-pointer items-center p-2 text-blue-600 transition duration-75 hover:bg-gray-200"
                   @click="resetApp"
                 >
                   <span class="icon-[bx--reset] h-4 w-4"></span>
@@ -162,7 +162,7 @@ async function resetApp() {
             game_id: game.game_id,
           },
         }"
-        class="block rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all hover:scale-105 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+        class="block rounded-lg border border-gray-200 bg-white p-6 shadow-xs transition-all hover:scale-105 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
       >
         <h5
           class="mb-2 truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
@@ -177,7 +177,7 @@ async function resetApp() {
 
       <button
         type="button"
-        class="relative flex h-24 w-full shrink-0 items-center justify-center rounded border-4 border-dashed border-blue-300 bg-white p-6 hover:bg-blue-50"
+        class="relative flex h-24 w-full shrink-0 cursor-pointer items-center justify-center rounded-sm border-4 border-dashed border-blue-300 bg-white p-6 hover:bg-blue-50"
         @click="handleNewGame"
       >
         <span class="icon-[material-symbols--add-rounded]"></span>

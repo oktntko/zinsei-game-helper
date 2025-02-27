@@ -5,7 +5,7 @@ await prepareDatabase();
 </script>
 
 <template>
-  <div class="min-h-lvh bg-gradient-to-b from-gray-200 to-gray-100">
+  <div class="min-h-lvh bg-linear-to-b from-gray-200 to-gray-100">
     <RouterView />
   </div>
 </template>

@@ -106,7 +106,7 @@ const modelValue = defineModel<typeof players.$inferInsert>({ required: true });
     <section class="flex justify-center gap-2">
       <button
         type="submit"
-        class="inline-flex min-w-24 items-center justify-center gap-0.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+        class="inline-flex min-w-24 cursor-pointer items-center justify-center gap-0.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 hover:text-blue-700 focus:ring-1 focus:ring-gray-500 focus:outline-hidden dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
       >
         <span class="icon-[el--ok-sign] h-4 w-4"></span>
         ＯＫ

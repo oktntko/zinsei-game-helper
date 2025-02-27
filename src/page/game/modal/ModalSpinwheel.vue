@@ -67,7 +67,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center overflow-hidden px-8 pb-4 pt-12">
+  <div class="flex flex-col items-center justify-center overflow-hidden px-8 pt-12 pb-4">
     <div class="h-80 w-80 rounded-full shadow-[0_0_4px_4px_rgba(0,0,0,0.25)] sm:h-96 sm:w-96">
       <div class="ui-wheel-of-fortune" :style="{ '--_items': size }">
         <ul ref="wheel">
@@ -80,7 +80,7 @@ onMounted(() => {
         <button
           type="button"
           :class="[
-            'aspect-square place-self-center rounded-full border-none bg-white/80',
+            'aspect-square cursor-pointer place-self-center rounded-full border-none bg-white/80',
             'w-[20cqi]',
             'transition-colors duration-150 disabled:cursor-wait disabled:bg-gray-100/80 disabled:text-gray-500',
           ]"
@@ -106,7 +106,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 /* https://dev.to/madsstoumann/wheel-of-fortune-with-css-p-pi-1ne9 */
 :where(.ui-wheel-of-fortune) {
   all: unset;

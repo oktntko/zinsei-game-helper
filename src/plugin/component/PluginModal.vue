@@ -26,23 +26,8 @@ const refDialog = ref<HTMLDialogElement>();
 const open = ref(false);
 
 onMounted(() => {
-  if (refDialog.value) {
-    const dialog = refDialog.value;
-    dialog.showModal();
-
-    dialog.addEventListener('cancel', (e) => {
-      e.preventDefault();
-      closeDelay();
-    });
-
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) {
-        closeDelay();
-      }
-    });
-
-    open.value = true;
-  }
+  refDialog.value?.showModal();
+  open.value = true;
 });
 
 function closeDelay(returnValue?: unknown | undefined) {
@@ -75,7 +60,34 @@ onErrorCaptured((message: string) => {
 </script>
 
 <template>
-  <dialog ref="refDialog" :class="['rounded-lg text-gray-900 shadow-xl', { open }, dialogClass]">
+  <dialog
+    ref="refDialog"
+    :class="[
+      'm-auto rounded-lg text-gray-900 shadow-xl',
+      { open },
+      'translate-y-4 scale-100 transform opacity-0 transition duration-200 ease-out sm:translate-y-4 sm:scale-95',
+      '[&.open]:translate-y-0 [&.open]:opacity-100 [&.open]:sm:scale-100',
+      'backdrop:bg-gray-400/50 backdrop:opacity-0 backdrop:transition backdrop:duration-200 backdrop:ease-out',
+      '[&.open]:backdrop:opacity-100',
+      dialogClass,
+    ]"
+    @click="
+      (e) => {
+        // ダイアログの外側がクリックされたとき閉じる
+        if (e.target === refDialog) {
+          e.preventDefault();
+          closeDelay();
+        }
+      }
+    "
+    @cancel="
+      (e: Event) => {
+        // ESCキーでキャンセルするとき閉じる
+        e.preventDefault();
+        closeDelay();
+      }
+    "
+  >
     <Suspense>
       <component
         :is="component"
@@ -87,14 +99,14 @@ onErrorCaptured((message: string) => {
 
       <template #fallback>
         <div class="flex h-full w-full grow flex-col items-center justify-center gap-4">
-          <span class="icon-[line-md--loading-loop] h-16 w-16 text-gray-600 text-opacity-60"></span>
+          <span class="icon-[line-md--loading-loop] text-opacity-60 h-16 w-16 text-gray-600"></span>
           <span class="animate-pulse">ちょっとまってね</span>
         </div>
       </template>
     </Suspense>
     <button
       type="button"
-      class="absolute right-2 top-2 h-6 w-6 rounded-full bg-transparent text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
+      class="absolute top-2 right-2 h-6 w-6 cursor-pointer rounded-full bg-transparent text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
       aria-label="Close"
       @click="closeDelay()"
     >
@@ -102,23 +114,3 @@ onErrorCaptured((message: string) => {
     </button>
   </dialog>
 </template>
-
-<style scoped lang="postcss">
-dialog {
-  @apply translate-y-4 transform opacity-0 transition duration-200 ease-out sm:translate-y-0 sm:scale-95;
-}
-
-dialog.open {
-  @apply translate-y-0 opacity-100 sm:scale-100;
-}
-
-dialog::backdrop,
-dialog + .backdrop {
-  @apply bg-gray-400/50 opacity-0 transition duration-150 ease-out;
-}
-
-dialog.open::backdrop,
-dialog.open + .backdrop {
-  @apply opacity-100;
-}
-</style>

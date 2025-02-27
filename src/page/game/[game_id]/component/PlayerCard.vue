@@ -28,7 +28,7 @@ watchEffect(() => {
 
 <template>
   <div
-    class="relative flex w-full grow flex-col justify-center gap-2 rounded bg-white transition-colors"
+    class="relative flex w-full grow flex-col justify-center gap-2 rounded-sm bg-white transition-colors"
     :class="[turn === player.order ? 'border-8 p-3 sm:p-6' : 'border-4 p-4 sm:p-7']"
     :style="{
       'border-color': turn === player.order ? `rgb(${player.color})` : `rgba(${player.color},0.6)`,
@@ -36,7 +36,7 @@ watchEffect(() => {
   >
     <!-- ターン -->
     <label
-      class="triangle absolute left-0 top-0 inline-flex cursor-pointer transition-colors"
+      class="triangle absolute top-0 left-0 inline-flex cursor-pointer transition-colors"
       :class="[
         turn === player.order ? 'w-11 bg-green-400' : 'w-12 bg-green-400/10 hover:bg-green-400/50',
       ]"
@@ -56,7 +56,7 @@ watchEffect(() => {
         <img title="イラスト" :src="player.image" width="40" height="40" />
         <button
           type="button"
-          class="-ml-2 transition-all hover:scale-110"
+          class="-ml-2 cursor-pointer transition-all hover:scale-110"
           :class="[
             !game.enable_marry
               ? 'invisible'
@@ -101,7 +101,7 @@ watchEffect(() => {
 
       <button
         type="button"
-        class="row-span-2 inline-flex flex-col items-center justify-center transition-all hover:scale-110"
+        class="row-span-2 inline-flex cursor-pointer flex-col items-center justify-center transition-all hover:scale-110"
         :class="[
           !game.enable_myhome
             ? 'invisible'
@@ -139,7 +139,7 @@ watchEffect(() => {
       <div class="col-span-2 overflow-hidden">
         <button
           type="button"
-          class="inline-flex items-center gap-px transition-all hover:scale-110"
+          class="inline-flex cursor-pointer items-center gap-px transition-all hover:scale-110"
           :class="[
             !game.enable_marry
               ? 'invisible'
@@ -232,7 +232,7 @@ watchEffect(() => {
 
           <button
             type="button"
-            class="absolute -right-4 -top-3 h-6 w-6 rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
+            class="absolute -top-3 -right-4 h-6 w-6 cursor-pointer rounded-full bg-transparent text-gray-400 transition-colors hover:text-gray-900 focus:ring-2 focus:ring-gray-300 dark:text-gray-500 dark:hover:text-white"
             @click="
               async () => {
                 if (await $dialog.confirm(`${player.name} の ポイント をもとにもどしますか？`)) {
@@ -267,7 +267,7 @@ watchEffect(() => {
           <button
             v-for="sign of [-1, 1]"
             :key="sign"
-            class="w-20 rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            class="w-20 cursor-pointer rounded-lg border bg-white px-2 py-1 text-base text-gray-900 transition-all disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             :class="[
               sign > 0
                 ? 'border-green-400 hover:bg-green-100 hover:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)] focus:bg-green-100 focus:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)] active:bg-green-100 active:shadow-[0_0_2px_2px_rgba(74,222,128,0.25)]'
@@ -292,7 +292,7 @@ watchEffect(() => {
       <div class="inline-flex items-center justify-center">
         <button
           type="button"
-          class="relative h-10 w-10 text-green-600 transition-all hover:scale-110"
+          class="relative h-10 w-10 cursor-pointer text-green-600 transition-all hover:scale-110"
           :class="[
             !game.enable_kabukenn
               ? 'invisible'
@@ -327,7 +327,7 @@ watchEffect(() => {
         </button>
         <button
           type="button"
-          class="relative h-10 w-10 text-green-600 transition-all hover:scale-110"
+          class="relative h-10 w-10 cursor-pointer text-green-600 transition-all hover:scale-110"
           :class="[
             !game.enable_kabukenn
               ? 'invisible'
@@ -360,7 +360,7 @@ watchEffect(() => {
         </button>
         <button
           type="button"
-          class="relative h-10 w-10 text-green-600 transition-all hover:scale-110"
+          class="relative h-10 w-10 cursor-pointer text-green-600 transition-all hover:scale-110"
           :class="[
             !game.enable_kabukenn
               ? 'invisible'
@@ -399,7 +399,7 @@ watchEffect(() => {
       <div class="inline-flex items-center justify-center gap-2">
         <button
           type="button"
-          class="relative inline-flex h-10 w-10 flex-col items-center justify-center transition-all hover:scale-110"
+          class="relative inline-flex h-10 w-10 cursor-pointer flex-col items-center justify-center transition-all hover:scale-110"
           :class="[
             !game.enable_syakkinn_yakusoku_tegata
               ? 'invisible'
@@ -438,7 +438,7 @@ watchEffect(() => {
 
         <button
           type="button"
-          class="relative inline-flex h-10 w-10 flex-col items-center justify-center transition-all hover:scale-110"
+          class="relative inline-flex h-10 w-10 cursor-pointer flex-col items-center justify-center transition-all hover:scale-110"
           :class="[
             !game.enable_kabukenn
               ? 'invisible'
