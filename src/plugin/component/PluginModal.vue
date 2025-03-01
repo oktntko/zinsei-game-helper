@@ -2,21 +2,18 @@
 import { useDialog } from '~/plugin/DialogPlugin';
 
 // TODO: FunctionalComponent でその場モーダルも作れるようにする
-withDefaults(
-  defineProps<{
-    component: unknown;
-    componentProps?: object;
-    componentEvents?: unknown;
-    componentClass?: string;
-    dialogClass?: string;
-  }>(),
-  {
-    componentClass: '',
-    dialogClass: '',
-    componentProps: () => ({}),
-    componentEvents: () => ({}),
-  },
-);
+const {
+  componentClass = '',
+  dialogClass = '',
+  componentProps = () => ({}),
+  componentEvents = () => ({}),
+} = defineProps<{
+  component: unknown;
+  componentProps?: object;
+  componentEvents?: unknown;
+  componentClass?: string;
+  dialogClass?: string;
+}>();
 
 const emit = defineEmits<{
   close: [data?: unknown];
@@ -34,14 +31,12 @@ function closeDelay(returnValue?: unknown | undefined) {
   if (refDialog.value) {
     const dialog = refDialog.value;
 
-    dialog.addEventListener(
-      'transitionend',
-      () => {
+    dialog.addEventListener('transitionend', (e) => {
+      if (e.target === dialog) {
         dialog.close();
         emit('close', returnValue);
-      },
-      { once: true },
-    );
+      }
+    });
 
     open.value = false;
   } else {

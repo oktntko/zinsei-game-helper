@@ -1,18 +1,15 @@
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    colorset?: 'blue' | 'green' | 'yellow' | 'red';
-    icon?: string;
-    message?: string;
-    duration?: number;
-  }>(),
-  {
-    colorset: 'blue',
-    icon: 'icon-[bx--info-circle]',
-    message: '',
-    duration: 2000 /*ms*/,
-  },
-);
+const {
+  colorset = 'blue',
+  icon = 'icon-[bx--info-circle]',
+  message = '',
+  duration = 2000 /*ms*/,
+} = defineProps<{
+  colorset?: 'blue' | 'green' | 'yellow' | 'red';
+  icon?: string;
+  message?: string;
+  duration?: number;
+}>();
 
 const emit = defineEmits<{
   close: [];
@@ -23,7 +20,7 @@ const open = ref(false);
 onMounted(() => {
   open.value = true;
 
-  setTimeout(close, props.duration);
+  setTimeout(close, duration);
 });
 
 function close() {

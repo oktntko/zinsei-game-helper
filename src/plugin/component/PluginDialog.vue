@@ -52,14 +52,12 @@ function closeDelay(returnValue?: typeof CONFIRMED_VALUE | undefined) {
   if (refDialog.value) {
     const dialog = refDialog.value;
 
-    dialog.addEventListener(
-      'transitionend',
-      () => {
+    dialog.addEventListener('transitionend', (e) => {
+      if (e.target === dialog) {
         dialog.close();
         emit('close', returnValue === CONFIRMED_VALUE);
-      },
-      { once: true },
-    );
+      }
+    });
 
     open.value = false;
   } else {

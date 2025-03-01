@@ -15,14 +15,12 @@ function closeDelay(returnValue?: string | undefined) {
   if (refDialog.value) {
     const dialog = refDialog.value;
 
-    dialog.addEventListener(
-      'transitionend',
-      () => {
+    dialog.addEventListener('transitionend', (e) => {
+      if (e.target === dialog) {
         dialog.close();
         emit('close', returnValue);
-      },
-      { once: true },
-    );
+      }
+    });
 
     open.value = false;
   } else {
